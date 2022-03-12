@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/siparis_nav"
+    app:startDestination="@id/girisFragment">
+
+    <fragment
+        android:id="@+id/anasayfaFragment"
+        android:name="com.example.siparisuygulamasi.fragment.AnasayfaFragment"
+        android:label="fragment_anasayfa"
+        tools:layout="@layout/fragment_anasayfa" >
+        <argument
+            android:name="kullanici_adi"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/sepetFragment"
+        android:name="com.example.siparisuygulamasi.fragment.SepetFragment"
+        android:label="fragment_sepet"
+        tools:layout="@layout/fragment_sepet" >
+        <argument
+            android:name="kullanici_adi"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/yemekDetayFragment"
+        android:name="com.example.siparisuygulamasi.fragment.YemekDetayFragment"
+        android:label="fragment_yemek_detay"
+        tools:layout="@layout/fragment_yemek_detay" >
+        <argument
+            android:name="kullanici_adi"
+            app:argType="string" />
+        <argument
+            android:name="sepet_yemek_id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/girisFragment"
+        android:name="com.example.siparisuygulamasi.fragment.GirisFragment"
+        android:label="GirisFragment" >
+        <action
+            android:id="@+id/action_girisFragment_to_anasayfaFragment"
+            app:destination="@id/anasayfaFragment" />
+    </fragment>
+</navigation>

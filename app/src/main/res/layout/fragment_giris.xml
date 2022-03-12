@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="toolbarTitle" type="String" />
+        <variable name="toolbarSubTitle" type="String" />
+        <variable name="girisFragment" type="com.example.siparisuygulamasi.fragment.GirisFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="32dp"
+        tools:context=".fragment.GirisFragment">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarGiris"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_baseline_shopping_basket_24"
+
+            app:subtitle="@{toolbarSubTitle}"
+            app:title="@{toolbarTitle}" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Giriş Yap"
+            android:onClick="@{(view) -> girisFragment.viewModel.login(view,editTextKullaniciAdi.getText().toString())}"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="@+id/textInputKullaniciAdi"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textInputKullaniciAdi"
+            app:layout_constraintTop_toBottomOf="@+id/textInputKullaniciAdi" />
+
+        <ImageView
+            android:id="@+id/imageViewGirisLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginTop="64dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/app_icon_500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarGiris" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputKullaniciAdi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAppName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextKullaniciAdi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kullanıcı Adı" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textViewAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/app_name"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewGirisLogo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
