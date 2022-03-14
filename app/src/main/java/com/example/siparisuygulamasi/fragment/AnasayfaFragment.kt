@@ -49,9 +49,10 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
         kullaniciAdi = bundle.kullaniciAdi
         desing.welcomeMessage = "Hoşgeldin ${bundle.kullaniciAdi}."
 
-        val dp = requireContext().resources.displayMetrics.density+0.5f
 
-        //Welcome message oto-gone.
+
+        //Welcome message oto-gone timer.
+        val dp = requireContext().resources.displayMetrics.density+0.5f
         var firstStart = true
         val timer = object: CountDownTimer(4000, 2000) {
             override fun onTick(millisUntilFinished: Long) {

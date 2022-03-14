@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="30dp"
-            android:onClick="@{(view) -> anasayfaFragment.viewModel.detaySayfasınaGec(anasayfaFragment.kullaniciAdi,yemekObject.yemek_adi,view)}">
+            android:onClick="@{(view) -> anasayfaFragment.viewModel.detaySayfasınaGec(anasayfaFragment.kullaniciAdi,yemekObject,view)}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

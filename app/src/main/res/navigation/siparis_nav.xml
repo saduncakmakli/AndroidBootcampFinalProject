@@ -35,8 +35,11 @@
             android:name="kullanici_adi"
             app:argType="string" />
         <argument
-            android:name="yemek_adi"
-            app:argType="string" />
+            android:name="yemekNesnesi"
+            app:argType="com.example.siparisuygulamasi.entity.Yemek" />
+        <argument
+            android:name="sepetYemekAdet"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/girisFragment"

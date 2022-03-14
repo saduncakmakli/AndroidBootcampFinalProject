@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.siparisuygulamasi.databinding.AnasayfaMenuCardBinding
 import com.example.siparisuygulamasi.entity.Yemek
 import com.example.siparisuygulamasi.fragment.AnasayfaFragment
+import com.example.siparisuygulamasi.picasso.PicassoUtils
 import com.example.siparisuygulamasi.viewmodel.AnasayfaFragmentViewModel
 
 class AnasayfaMenuAdapter(var mContext:Context,
@@ -44,7 +45,7 @@ class AnasayfaMenuAdapter(var mContext:Context,
         val cardDesign = holder.desing
         cardDesign.yemekObject = yemek
         cardDesign.anasayfaFragment = fragment
-        viewModel.cardMenuResimGoster(yemekListesi[position].yemek_resim_adi,cardDesign)
+        PicassoUtils.yemekResimGoster(yemekListesi[position].yemek_resim_adi,cardDesign.imageViewCardMenu)
     }
 
     override fun getItemCount(): Int {

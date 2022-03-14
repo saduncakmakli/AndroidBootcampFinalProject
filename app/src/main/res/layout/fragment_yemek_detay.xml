@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable name="toolbarTitle" type="String" />
+        <variable name="yemekDetayFragment" type="com.example.siparisuygulamasi.fragment.YemekDetayFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +17,7 @@
             android:id="@+id/detayButtonArttir"
             android:layout_width="45dp"
             android:layout_height="55dp"
+            android:onClick="@{() -> yemekDetayFragment.buttonArttir()}"
             android:layout_marginStart="8dp"
             app:icon="@drawable/ic_baseline_arrow_forward_ios_24"
             app:layout_constraintStart_toEndOf="@+id/detayTextViewAdet"
@@ -25,6 +27,7 @@
             android:id="@+id/detayButtonAzalt"
             android:layout_width="45dp"
             android:layout_height="56dp"
+            android:onClick="@{() -> yemekDetayFragment.buttonAzalt()}"
             android:layout_marginEnd="8dp"
             app:icon="@drawable/ic_baseline_arrow_back_ios_24"
             app:layout_constraintEnd_toStartOf="@+id/detayTextViewAdet"
@@ -39,7 +42,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detayTextViewUrunIsmi"
-            app:srcCompat="@drawable/ayran" />
+            tools:srcCompat="@drawable/ayran" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/detayToolbar"
@@ -57,6 +60,7 @@
             android:id="@+id/detayTextViewUrunIsmi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{yemekDetayFragment.yemekNesnesi.yemek_adi}"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/sansita_swashed"
             android:textSize="34sp"
@@ -69,6 +73,7 @@
             android:id="@+id/detayTextViewFiyat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text='@{String.valueOf(yemekDetayFragment.yemekNesnesi.yemek_fiyat)+" ₺"}'
             android:layout_marginTop="16dp"
             android:fontFamily="@font/sansita_swashed"
             android:textSize="24sp"
@@ -83,6 +88,7 @@
             android:layout_marginBottom="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text='@{String.valueOf(yemekDetayFragment.yemekNesnesi.yemek_fiyat*yemekDetayFragment.yemekAdet)+" ₺"}'
             android:fontFamily="@font/sansita_swashed"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/detayButtonAdetGuncelle"

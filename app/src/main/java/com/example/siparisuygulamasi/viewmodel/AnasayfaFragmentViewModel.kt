@@ -5,11 +5,9 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
-import com.example.siparisuygulamasi.databinding.AnasayfaMenuCardBinding
 import com.example.siparisuygulamasi.entity.Yemek
 import com.example.siparisuygulamasi.fragment.AnasayfaFragmentDirections
 import com.example.siparisuygulamasi.repo.YemekRepository
-import com.squareup.picasso.Picasso
 
 class AnasayfaFragmentViewModel : ViewModel()  {
     var yemekListesi = MutableLiveData<List<Yemek>>()
@@ -26,15 +24,10 @@ class AnasayfaFragmentViewModel : ViewModel()  {
         yemekRepo.yemekleriVeritabanindanGuncelle()
     }
 
-    fun cardMenuResimGoster(resimAdi:String, desing:AnasayfaMenuCardBinding){
-        //Log.e("DebugFragmentVM", "Anasayfa $resimAdi card picasso image load")
-        val url = "http://kasimadalan.pe.hu/yemekler/resimler/$resimAdi"
-        Picasso.get().load(url).into(desing.imageViewCardMenu)
-    }
-
-    fun detaySayfasınaGec(kullaniciAdi:String, yemekAdi:String, v:View){
+    fun detaySayfasınaGec(kullaniciAdi:String, yemekNesnesi:Yemek, v:View){
         menuAdapterActive = false
-        val direction = AnasayfaFragmentDirections.actionAnasayfaFragmentToYemekDetayFragment(kullaniciAdi,yemekAdi)
+        //--------------------------------!!! Yemek Adedi Hesap Edilip Gönderilecek.
+        val direction = AnasayfaFragmentDirections.actionAnasayfaFragmentToYemekDetayFragment(kullaniciAdi,yemekNesnesi,0)
         Navigation.findNavController(v).navigate(direction)
     }
 }
