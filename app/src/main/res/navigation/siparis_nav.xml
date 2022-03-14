@@ -13,6 +13,9 @@
         <argument
             android:name="kullanici_adi"
             app:argType="string" />
+        <action
+            android:id="@+id/action_anasayfaFragment_to_yemekDetayFragment"
+            app:destination="@id/yemekDetayFragment" />
     </fragment>
     <fragment
         android:id="@+id/sepetFragment"
@@ -32,8 +35,8 @@
             android:name="kullanici_adi"
             app:argType="string" />
         <argument
-            android:name="sepet_yemek_id"
-            app:argType="integer" />
+            android:name="yemek_adi"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/girisFragment"

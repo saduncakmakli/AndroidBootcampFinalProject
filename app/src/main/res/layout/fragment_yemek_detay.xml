@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,5 +10,109 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.YemekDetayFragment" />
+        tools:context=".fragment.YemekDetayFragment">
+
+        <Button
+            android:id="@+id/detayButtonArttir"
+            android:layout_width="45dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="8dp"
+            app:icon="@drawable/ic_baseline_arrow_forward_ios_24"
+            app:layout_constraintStart_toEndOf="@+id/detayTextViewAdet"
+            app:layout_constraintTop_toTopOf="@+id/detayButtonAzalt" />
+
+        <Button
+            android:id="@+id/detayButtonAzalt"
+            android:layout_width="45dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="8dp"
+            app:icon="@drawable/ic_baseline_arrow_back_ios_24"
+            app:layout_constraintEnd_toStartOf="@+id/detayTextViewAdet"
+            app:layout_constraintTop_toBottomOf="@+id/detayTextViewFiyat" />
+
+        <ImageView
+            android:id="@+id/detayImageViewUrun"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detayTextViewUrunIsmi"
+            app:srcCompat="@drawable/ayran" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/detayToolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/toolbar" />
+
+        <TextView
+            android:id="@+id/detayTextViewUrunIsmi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/sansita_swashed"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detayToolbar"
+            tools:text="Ayran" />
+
+        <TextView
+            android:id="@+id/detayTextViewFiyat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/sansita_swashed"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detayImageViewUrun"
+            tools:text="5₺" />
+
+        <TextView
+            android:id="@+id/detayTextViewToplamFiyat"
+            android:layout_marginBottom="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sansita_swashed"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/detayButtonAdetGuncelle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Toplam: 5₺" />
+
+        <TextView
+            android:id="@+id/detayTextViewAdet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/detayButtonAzalt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/detayButtonAzalt"
+            tools:text="1 Adet" />
+
+        <Button
+            android:id="@+id/detayButtonAdetGuncelle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Sepeti Güncelle"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

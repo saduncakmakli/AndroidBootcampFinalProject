@@ -14,7 +14,7 @@ import com.example.siparisuygulamasi.viewmodel.GirisFragmentViewModel
 class GirisFragment : Fragment() {
 
     private lateinit var design:FragmentGirisBinding
-    lateinit var  viewModel:GirisFragmentViewModel
+    lateinit var viewModel:GirisFragmentViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment

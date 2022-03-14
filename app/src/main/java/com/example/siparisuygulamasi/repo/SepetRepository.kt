@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.siparisuygulamasi.entity.CRUDCevap
 import com.example.siparisuygulamasi.entity.Sepet
 import com.example.siparisuygulamasi.entity.SepetCevap
+import com.example.siparisuygulamasi.entity.Yemek
 import com.example.siparisuygulamasi.retrofit.ApiUtils
 import com.example.siparisuygulamasi.retrofit.SepetDaoInterface
 import retrofit2.Call
@@ -18,6 +19,10 @@ class SepetRepository (val kullanici_adi: String) {
     init {
         sepetDataAccessObject = ApiUtils.getSepetDaoInterface()
         sepetListesi = MutableLiveData()
+    }
+
+    fun tumSepetler() : MutableLiveData<List<Sepet>>{
+        return sepetListesi
     }
 
     fun sepeteYemekEkle(yemek_adi:String, yemek_resim_adi:String, yemek_fiyat:Int, yemek_siparis_adet:Int){
