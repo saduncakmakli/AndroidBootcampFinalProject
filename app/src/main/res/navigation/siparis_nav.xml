@@ -10,9 +10,6 @@
         android:name="com.example.siparisuygulamasi.fragment.AnasayfaFragment"
         android:label="fragment_anasayfa"
         tools:layout="@layout/fragment_anasayfa" >
-        <argument
-            android:name="kullanici_adi"
-            app:argType="string" />
         <action
             android:id="@+id/action_anasayfaFragment_to_yemekDetayFragment"
             app:destination="@id/yemekDetayFragment" />
@@ -21,19 +18,12 @@
         android:id="@+id/sepetFragment"
         android:name="com.example.siparisuygulamasi.fragment.SepetFragment"
         android:label="fragment_sepet"
-        tools:layout="@layout/fragment_sepet" >
-        <argument
-            android:name="kullanici_adi"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_sepet" />
     <fragment
         android:id="@+id/yemekDetayFragment"
         android:name="com.example.siparisuygulamasi.fragment.YemekDetayFragment"
         android:label="fragment_yemek_detay"
         tools:layout="@layout/fragment_yemek_detay" >
-        <argument
-            android:name="kullanici_adi"
-            app:argType="string" />
         <argument
             android:name="yemekNesnesi"
             app:argType="com.example.siparisuygulamasi.entity.Yemek" />

@@ -38,4 +38,6 @@ class YemekRepository {
             }
         })
     }
+
+    fun yemekleriBas(){ for (yemek in yemekListesi.value!!) Log.e("DebugFragmentVM", "Yemek ID:${yemek.yemek_id} Ad:${yemek.yemek_adi}") }
 }

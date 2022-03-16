@@ -19,7 +19,6 @@ class YemekDetayFragment : Fragment() {
 
     private lateinit var desing:FragmentYemekDetayBinding
     lateinit var viewModel:YemekDetayFragmentViewModel
-    lateinit var kullaniciAdi:String
     lateinit var yemekNesnesi:Yemek
     var yemekAdet = 0
 
@@ -31,9 +30,17 @@ class YemekDetayFragment : Fragment() {
         desing.toolbarTitle = "Ürün Detayı"
         (activity as AppCompatActivity).setSupportActionBar(desing.detayToolbar)
 
+        //OBSERVER
+        viewModel.yemekListesi.observe(viewLifecycleOwner){
+
+        }
+
+        viewModel.sepetListesi.observe(viewLifecycleOwner){
+
+        }
+
         //ARGS
         val bundle:YemekDetayFragmentArgs by navArgs()
-        kullaniciAdi = bundle.kullaniciAdi
         yemekNesnesi = bundle.yemekNesnesi
         yemekAdet = bundle.sepetYemekAdet
 
@@ -64,6 +71,7 @@ class YemekDetayFragment : Fragment() {
     }
 
     fun buttonAzalt():String{
+        viewModel.sepettenYemekCikar(yemekNesnesi.yemek_adi)
         if (yemekAdet > 0){
             yemekAdet -= 1
         }else{

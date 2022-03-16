@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.example.siparisuygulamasi.R
 import com.example.siparisuygulamasi.databinding.FragmentGirisBinding
+import com.example.siparisuygulamasi.entity.ActiveData
 import com.example.siparisuygulamasi.viewmodel.GirisFragmentViewModel
 
 class GirisFragment : Fragment() {
@@ -30,5 +31,10 @@ class GirisFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val tempViewModel : GirisFragmentViewModel by viewModels()
         viewModel = tempViewModel
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ActiveData.menuAdapterActive = false
     }
 }

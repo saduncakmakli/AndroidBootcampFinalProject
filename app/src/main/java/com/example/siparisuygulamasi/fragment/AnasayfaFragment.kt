@@ -9,19 +9,20 @@ import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.siparisuygulamasi.R
 import com.example.siparisuygulamasi.adapter.AnasayfaMenuAdapter
 import com.example.siparisuygulamasi.databinding.FragmentAnasayfaBinding
+import com.example.siparisuygulamasi.entity.ActiveData
+import com.example.siparisuygulamasi.entity.Yemek
 import com.example.siparisuygulamasi.viewmodel.AnasayfaFragmentViewModel
 
 
 class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var desing:FragmentAnasayfaBinding
     lateinit var viewModel:AnasayfaFragmentViewModel
-    lateinit var kullaniciAdi:String
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         desing= DataBindingUtil.inflate(inflater, R.layout.fragment_anasayfa, container, false)
@@ -33,23 +34,35 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
 
         //ADAPTER
         desing.rvMenu.layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
+
+        //OBSERVER
         viewModel.yemekListesi.observe(viewLifecycleOwner) {
+            viewModel.yemekleriBas()
             Log.e("DebugFragment", "AnasayfaFragment yemekListesi obverse method")
-            if (!viewModel.menuAdapterActive) {
+
+            if (!ActiveData.menuAdapterActive) {
                 val adapter = AnasayfaMenuAdapter(requireContext(),it,viewModel,this)
                 desing.menuAdapter = adapter
                 Log.e("DebugFragment", "Anasayfa Menu Adapter Updated")
-                viewModel.menuAdapterActive = true
+                ActiveData.menuAdapterActive = true
             }
 
         }
 
+        viewModel.sepetListesi.observe(viewLifecycleOwner){
+            viewModel.sepetiBas()
+            val sepetUcreti = viewModel.toplamSepetUcretiniHesapla(it)
+            val gonderimUcreti = viewModel.gonderimUcretiniHesapla(sepetUcreti)
+            desing.textViewSepetUcreti.text = "Sepet Ücreti: ${sepetUcreti}₺"
+            desing.textViewGonderimUcreti.text =if (sepetUcreti < 75) "Gönderim Ücreti: ${gonderimUcreti}₺" else "75₺ Üzeri Alışverişe, GÖNDERİM ÜCRETİ YOK!"
+            desing.textViewToplamUcret.text = "Toplam Ücret: ${gonderimUcreti+sepetUcreti}₺"
+
+        }
+
         //ARGS
-        val bundle:AnasayfaFragmentArgs by navArgs()
-        kullaniciAdi = bundle.kullaniciAdi
-        desing.welcomeMessage = "Hoşgeldin ${bundle.kullaniciAdi}."
-
-
+        //val bundle:AnasayfaFragmentArgs by navArgs()
+        //kullaniciAdi = bundle.kullaniciAdi
+        desing.welcomeMessage = "Hoşgeldin ${ActiveData.kullanici_adi}."
 
         //Welcome message oto-gone timer.
         val dp = requireContext().resources.displayMetrics.density+0.5f
@@ -104,6 +117,12 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onPause() {
         super.onPause()
+    }
+
+    fun detaySayfasınaGec(yemekNesnesi: Yemek, v:View){
+        ActiveData.menuAdapterActive = false
+        val direction = AnasayfaFragmentDirections.actionAnasayfaFragmentToYemekDetayFragment(yemekNesnesi,viewModel.yemekSiparisAdediniHesapla(yemekNesnesi.yemek_adi))
+        Navigation.findNavController(v).navigate(direction)
     }
 
 

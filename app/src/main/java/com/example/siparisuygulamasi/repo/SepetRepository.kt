@@ -2,17 +2,14 @@ package com.example.siparisuygulamasi.repo
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.siparisuygulamasi.entity.CRUDCevap
-import com.example.siparisuygulamasi.entity.Sepet
-import com.example.siparisuygulamasi.entity.SepetCevap
-import com.example.siparisuygulamasi.entity.Yemek
+import com.example.siparisuygulamasi.entity.*
 import com.example.siparisuygulamasi.retrofit.ApiUtils
 import com.example.siparisuygulamasi.retrofit.SepetDaoInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SepetRepository (val kullanici_adi: String) {
+class SepetRepository () {
     var sepetListesi:MutableLiveData<List<Sepet>>
     var sepetDataAccessObject:SepetDaoInterface
 
@@ -26,7 +23,7 @@ class SepetRepository (val kullanici_adi: String) {
     }
 
     fun sepeteYemekEkle(yemek_adi:String, yemek_resim_adi:String, yemek_fiyat:Int, yemek_siparis_adet:Int){
-        sepetDataAccessObject.sepeteYemekEkle(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,kullanici_adi).enqueue(object : Callback<CRUDCevap>{
+        sepetDataAccessObject.sepeteYemekEkle(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,ActiveData.kullanici_adi).enqueue(object : Callback<CRUDCevap>{
             override fun onResponse(call: Call<CRUDCevap>?, response: Response<CRUDCevap>) {
                 val success = response.body().success
                 val mesaj = response.body().message
@@ -39,7 +36,7 @@ class SepetRepository (val kullanici_adi: String) {
     }
 
     fun sepetiVeriTabanindanGuncelle(){
-        sepetDataAccessObject.sepettekiYemekleriGetir(kullanici_adi).enqueue(object : Callback<SepetCevap>{
+        sepetDataAccessObject.sepettekiYemekleriGetir(ActiveData.kullanici_adi).enqueue(object : Callback<SepetCevap>{
             override fun onResponse(call: Call<SepetCevap>?, response: Response<SepetCevap>) {
                 val success = response.body().success
                 val liste = response.body().sepet_yemekler
@@ -53,7 +50,7 @@ class SepetRepository (val kullanici_adi: String) {
     }
 
     fun sepettenYemekSil(sepet_yemek_id:Int){
-        sepetDataAccessObject.sepettenYemekSil(sepet_yemek_id,kullanici_adi).enqueue(object : Callback<CRUDCevap>{
+        sepetDataAccessObject.sepettenYemekSil(sepet_yemek_id,ActiveData.kullanici_adi).enqueue(object : Callback<CRUDCevap>{
             override fun onResponse(call: Call<CRUDCevap>?, response: Response<CRUDCevap>) {
                 val success = response.body().success
                 val mesaj = response.body().message
@@ -65,6 +62,47 @@ class SepetRepository (val kullanici_adi: String) {
             }
         })
     }
+
+    fun sepetteYemegiFiltrele(yemek_adi: String, sepetListesi: List<Sepet>?): List<Sepet>?{
+        if (sepetListesi != null ){
+            val localSepetListesi = sepetListesi.toList() //Parametre olarak gelen listeyi kopyalamak için
+            val returnList = ArrayList<Sepet>()
+            for (s in localSepetListesi){
+                if (s.yemek_adi == yemek_adi){
+                    returnList.add(s)
+                }
+            }
+            return returnList
+        }
+        else return null
+    }
+
+    fun listedekiToplamSiparisAdedi(sepetListesi: List<Sepet>?) : Int{
+        var count = 0
+        if (sepetListesi != null)
+            for (s in sepetListesi){
+                count += s.yemek_siparis_adet
+            }
+        else count = -1
+        return count
+    }
+
+    fun toplamSepetUcretiniHesapla(sepetListesi: List<Sepet>?) : Int{
+        var count = 0
+        if (sepetListesi != null)
+            for (s in sepetListesi){
+                count += s.yemek_siparis_adet*s.yemek_fiyat
+            }
+        else count = -1
+        return count
+    }
+
+    fun sepettenYemekCikar(yemek_adi:String){
+        for (s in sepetListesi.value!!){
+            if (s.yemek_adi == yemek_adi) sepettenYemekSil(s.sepet_yemek_id) }
+    }
+
+    fun sepetiBas(){ for (sepet in sepetListesi.value!!) Log.e("DebugFragmentVM", "Sepet ID:${sepet.sepet_yemek_id} Ad:${sepet.yemek_adi}") }
 
 
 

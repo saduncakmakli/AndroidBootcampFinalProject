@@ -6,6 +6,7 @@
     <data>
         <variable name="yemekObject" type="com.example.siparisuygulamasi.entity.Yemek" />
         <variable name="anasayfaFragment" type="com.example.siparisuygulamasi.fragment.AnasayfaFragment" />
+        <import type="com.example.siparisuygulamasi.entity.ActiveData"/>
     </data>
 
     <LinearLayout
@@ -19,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="30dp"
-            android:onClick="@{(view) -> anasayfaFragment.viewModel.detaySayfasınaGec(anasayfaFragment.kullaniciAdi,yemekObject,view)}">
+            android:onClick="@{(view) -> anasayfaFragment.detaySayfasınaGec(yemekObject,view)}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

@@ -155,7 +155,7 @@
                 android:id="@+id/textViewSepetUcreti"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Sepet Ücreti: 0₺"
+                android:text='@{"Sepet Ücreti: 0₺"}'
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/textViewGonderimUcreti"
                 app:layout_constraintStart_toStartOf="@+id/textViewGonderimUcreti"
