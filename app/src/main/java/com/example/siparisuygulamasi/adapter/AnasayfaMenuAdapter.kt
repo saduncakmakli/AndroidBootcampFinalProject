@@ -12,7 +12,6 @@ import com.example.siparisuygulamasi.picasso.PicassoUtils
 import com.example.siparisuygulamasi.viewmodel.AnasayfaFragmentViewModel
 
 class AnasayfaMenuAdapter(var mContext:Context,
-                          var yemekListesi:List<Yemek>,
                           var viewModel:AnasayfaFragmentViewModel,
                           var fragment:AnasayfaFragment) : RecyclerView.Adapter<AnasayfaMenuAdapter.CardDesingHolder>() {
     init {
@@ -41,14 +40,17 @@ class AnasayfaMenuAdapter(var mContext:Context,
     }
 
     override fun onBindViewHolder(holder: CardDesingHolder, position: Int) {
-        val yemek = yemekListesi.get(position)
+        val yemek = viewModel.yemekListesi.value!!.get(position)
         val cardDesign = holder.desing
         cardDesign.yemekObject = yemek
         cardDesign.anasayfaFragment = fragment
-        PicassoUtils.yemekResimGoster(yemekListesi[position].yemek_resim_adi,cardDesign.imageViewCardMenu)
+        PicassoUtils.yemekResimGoster(viewModel.yemekListesi.value!![position].yemek_resim_adi,cardDesign.imageViewCardMenu)
     }
 
     override fun getItemCount(): Int {
-        return yemekListesi.size
+        viewModel.yemekListesi.value?.let {
+            return it.size
+        }
+        return 0
     }
 }

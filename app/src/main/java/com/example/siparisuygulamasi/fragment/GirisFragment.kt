@@ -1,6 +1,7 @@
 package com.example.siparisuygulamasi.fragment
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,17 @@ class GirisFragment : Fragment() {
         design.toolbarTitle = getString(R.string.app_name)
         design.toolbarSubTitle = "Kullanıcı Girişi"
 
+        //Enter tuşu ile giriş yapmak için
+        design.editTextKullaniciAdi.setOnKeyListener { view, i, keyEvent ->
+            when(i){
+                KeyEvent.KEYCODE_ENTER -> {
+                    viewModel.login(view,design.editTextKullaniciAdi.text.toString())
+                    true
+                }
+                else -> false
+            }
+
+        }
         return design.root
     }
 

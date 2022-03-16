@@ -45,6 +45,7 @@ class SepetRepository () {
             }
             override fun onFailure(call: Call<SepetCevap>?, t: Throwable?) {
                 Log.e("DebugRepo", "Sepetteki Yemekleri Getir Api Failure")
+                sepetListesi.value = null
             }
         })
     }
@@ -83,7 +84,6 @@ class SepetRepository () {
             for (s in sepetListesi){
                 count += s.yemek_siparis_adet
             }
-        else count = -1
         return count
     }
 
@@ -93,16 +93,20 @@ class SepetRepository () {
             for (s in sepetListesi){
                 count += s.yemek_siparis_adet*s.yemek_fiyat
             }
-        else count = -1
         return count
     }
 
     fun sepettenYemekCikar(yemek_adi:String){
+        if (sepetListesi.value != null)
         for (s in sepetListesi.value!!){
             if (s.yemek_adi == yemek_adi) sepettenYemekSil(s.sepet_yemek_id) }
     }
 
-    fun sepetiBas(){ for (sepet in sepetListesi.value!!) Log.e("DebugFragmentVM", "Sepet ID:${sepet.sepet_yemek_id} Ad:${sepet.yemek_adi}") }
+    fun siparisOlustur(yemek:Yemek, siparisAdet:Int){
+        sepeteYemekEkle(yemek.yemek_adi,yemek.yemek_resim_adi,yemek.yemek_fiyat,siparisAdet)
+    }
+
+    fun sepetiBas(){ sepetListesi.value?.let {  for (sepet in sepetListesi.value!!) Log.e("DebugFragmentVM", "Sepet ID:${sepet.sepet_yemek_id} Ad:${sepet.yemek_adi}") } }
 
 
 

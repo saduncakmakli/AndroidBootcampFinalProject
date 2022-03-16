@@ -9,8 +9,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.siparisuygulamasi.R
 import com.example.siparisuygulamasi.adapter.AnasayfaMenuAdapter
@@ -18,6 +18,9 @@ import com.example.siparisuygulamasi.databinding.FragmentAnasayfaBinding
 import com.example.siparisuygulamasi.entity.ActiveData
 import com.example.siparisuygulamasi.entity.Yemek
 import com.example.siparisuygulamasi.viewmodel.AnasayfaFragmentViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -37,11 +40,11 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
 
         //OBSERVER
         viewModel.yemekListesi.observe(viewLifecycleOwner) {
-            viewModel.yemekleriBas()
             Log.e("DebugFragment", "AnasayfaFragment yemekListesi obverse method")
+            viewModel.yemekleriBas()
 
             if (!ActiveData.menuAdapterActive) {
-                val adapter = AnasayfaMenuAdapter(requireContext(),it,viewModel,this)
+                val adapter = AnasayfaMenuAdapter(requireContext(),viewModel,this)
                 desing.menuAdapter = adapter
                 Log.e("DebugFragment", "Anasayfa Menu Adapter Updated")
                 ActiveData.menuAdapterActive = true
@@ -50,24 +53,17 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
         }
 
         viewModel.sepetListesi.observe(viewLifecycleOwner){
+            Log.e("DebugFragment", "AnasayfaFragment sepetListesi obverse method")
             viewModel.sepetiBas()
-            val sepetUcreti = viewModel.toplamSepetUcretiniHesapla(it)
-            val gonderimUcreti = viewModel.gonderimUcretiniHesapla(sepetUcreti)
-            desing.textViewSepetUcreti.text = "Sepet Ücreti: ${sepetUcreti}₺"
-            desing.textViewGonderimUcreti.text =if (sepetUcreti < 75) "Gönderim Ücreti: ${gonderimUcreti}₺" else "75₺ Üzeri Alışverişe, GÖNDERİM ÜCRETİ YOK!"
-            desing.textViewToplamUcret.text = "Toplam Ücret: ${gonderimUcreti+sepetUcreti}₺"
+            ekraniGuncelle()
 
         }
 
-        //ARGS
-        //val bundle:AnasayfaFragmentArgs by navArgs()
-        //kullaniciAdi = bundle.kullaniciAdi
         desing.welcomeMessage = "Hoşgeldin ${ActiveData.kullanici_adi}."
-
         //Welcome message oto-gone timer.
         val dp = requireContext().resources.displayMetrics.density+0.5f
         var firstStart = true
-        val timer = object: CountDownTimer(4000, 2000) {
+        val timerWelcomeMessage = object: CountDownTimer(4000, 2000) {
             override fun onTick(millisUntilFinished: Long) {
                 if ((desing.textViewWelcome.visibility == View.VISIBLE) && !firstStart){
                     desing.textViewWelcome.visibility = View.GONE
@@ -81,8 +77,12 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
             }
             override fun onFinish() {}
         }
-        timer.start()
 
+        //Timer and Coroutine Job Starters
+        timerWelcomeMessage.start()
+        startRegularlyApiRequest()
+
+        //guncelle()
         return desing.root
     }
 
@@ -110,19 +110,54 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
         return true
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.yemekleriGuncelle()
-    }
-
     override fun onPause() {
         super.onPause()
+        cancelRegularlyApiRequest()
     }
 
     fun detaySayfasınaGec(yemekNesnesi: Yemek, v:View){
         ActiveData.menuAdapterActive = false
         val direction = AnasayfaFragmentDirections.actionAnasayfaFragmentToYemekDetayFragment(yemekNesnesi,viewModel.yemekSiparisAdediniHesapla(yemekNesnesi.yemek_adi))
         Navigation.findNavController(v).navigate(direction)
+    }
+
+    fun guncelle(){
+        viewModel.yemekleriGuncelle()
+        viewModel.sepetiGuncelle()
+        ekraniGuncelle()
+    }
+
+    fun ekraniGuncelle(){
+        var sepetUcreti = 0
+        var gonderimUcreti = 0
+
+        viewModel.sepetListesi.value?.let {
+            sepetUcreti = viewModel.toplamSepetUcretiniHesapla(it)
+            gonderimUcreti = viewModel.gonderimUcretiniHesapla(sepetUcreti)
+        }
+
+        Log.e("Debug", "Anasayfa Ekran Guncellendi Sepet Ücreti:${sepetUcreti}, Gönderim Ücreti:${gonderimUcreti}")
+        desing.textViewSepetUcreti.text = "Sepet Ücreti: ${sepetUcreti}₺"
+        desing.textViewGonderimUcreti.text =if (sepetUcreti < 75) "Gönderim Ücreti: ${gonderimUcreti}₺" else "75₺ Üzeri Alışverişe, GÖNDERİM ÜCRETİ YOK!"
+        desing.textViewToplamUcret.text = "Toplam Ücret: ${gonderimUcreti+sepetUcreti}₺"
+
+    }
+
+    //Oto API Request for update Data regularly
+    private var apiRequestJob: Job? = null
+
+    fun startRegularlyApiRequest() {
+        apiRequestJob = lifecycleScope.launch {
+            while(true) {
+                Log.e("DebugFragment", "Anasayfa -> apiRequestJob is running.")
+                guncelle()
+                delay(10_000)
+            }
+        }
+    }
+
+    fun cancelRegularlyApiRequest() {
+        apiRequestJob?.cancel()
     }
 
 

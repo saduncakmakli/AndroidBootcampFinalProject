@@ -114,6 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:text="Sepeti Güncelle"
+            android:onClick="@{() -> yemekDetayFragment.siparisiGuncelle()}"
             android:textAllCaps="false"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"

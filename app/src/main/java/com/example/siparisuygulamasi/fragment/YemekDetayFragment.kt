@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -21,6 +22,7 @@ class YemekDetayFragment : Fragment() {
     lateinit var viewModel:YemekDetayFragmentViewModel
     lateinit var yemekNesnesi:Yemek
     var yemekAdet = 0
+    var adetDegisiklik = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         desing = DataBindingUtil.inflate(inflater, R.layout.fragment_yemek_detay, container, false)
@@ -36,7 +38,8 @@ class YemekDetayFragment : Fragment() {
         }
 
         viewModel.sepetListesi.observe(viewLifecycleOwner){
-
+            yemekAdet = viewModel.yemekSiparisAdediniHesapla(yemekNesnesi.yemek_adi)
+            ekraniGuncelle()
         }
 
         //ARGS
@@ -48,7 +51,7 @@ class YemekDetayFragment : Fragment() {
         //DetayImageLoad
         PicassoUtils.yemekResimGoster(yemekNesnesi.yemek_resim_adi,desing.detayImageViewUrun)
 
-        adetGuncelle()
+        ekraniGuncelle()
         return desing.root
     }
 
@@ -61,28 +64,36 @@ class YemekDetayFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //Ürünün adedi güncellenecek
     }
 
     fun buttonArttir():String{
         yemekAdet += 1
-        adetGuncelle()
+        ekraniGuncelle()
+        adetDegisiklik = true
         return yemekAdet.toString()
     }
 
     fun buttonAzalt():String{
-        viewModel.sepettenYemekCikar(yemekNesnesi.yemek_adi)
-        if (yemekAdet > 0){
-            yemekAdet -= 1
-        }else{
-            yemekAdet = 0
-        }
-        adetGuncelle()
+        if (yemekAdet > 0) yemekAdet -= 1
+        else yemekAdet = 0
+
+        ekraniGuncelle()
+        adetDegisiklik = true
         return yemekAdet.toString()
     }
 
-    fun adetGuncelle(){
+    fun ekraniGuncelle(){
         desing.detayTextViewAdet.text = "${yemekAdet.toString()} Adet"
         desing.detayTextViewToplamFiyat.text = "${(yemekAdet*yemekNesnesi.yemek_fiyat).toString()} ₺"
+    }
+
+    fun siparisiGuncelle(){
+        if (adetDegisiklik){
+            viewModel.sepettenYemekCikar(yemekNesnesi.yemek_adi)
+            viewModel.siparisOlustur(yemekNesnesi,yemekAdet)
+            Toast.makeText(requireContext(), "Sipariş Güncellendi.", Toast.LENGTH_SHORT).show()
+            adetDegisiklik = false
+        }
+
     }
 }

@@ -4,11 +4,8 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation
-import com.example.siparisuygulamasi.entity.ActiveData
 import com.example.siparisuygulamasi.entity.Sepet
 import com.example.siparisuygulamasi.entity.Yemek
-import com.example.siparisuygulamasi.fragment.AnasayfaFragmentDirections
 import com.example.siparisuygulamasi.repo.SepetRepository
 import com.example.siparisuygulamasi.repo.YemekRepository
 
