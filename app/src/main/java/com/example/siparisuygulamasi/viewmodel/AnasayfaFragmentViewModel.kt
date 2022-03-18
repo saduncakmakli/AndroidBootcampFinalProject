@@ -36,11 +36,13 @@ class AnasayfaFragmentViewModel : ViewModel()  {
     fun sepetiBas(){sepetRepo.sepetiBas()}
 
     //APILER
-    fun yemekSiparisAdediniHesapla(yemek_adi: String): Int{ return listedekiToplamSiparisAdedi(sepetteYemegiFiltrele(yemek_adi,sepetListesi.value)) }
+    fun yemekSiparisAdediniHesapla(yemek_adi: String): Int{ return listedekiToplamSiparisAdedi(sepetListesi.value, yemek_adi) }
 
-    fun sepetteYemegiFiltrele(yemek_adi: String, sepetListesi: List<Sepet>?): List<Sepet>?{ return sepetRepo.sepetteYemegiFiltrele(yemek_adi,sepetListesi) }
+    fun sepetteYemegiFiltrele(yemek_adi: String, sepetListesi: List<Sepet>?): List<Sepet>?{ return sepetRepo.sepetteYemegiFiltrele(yemek_adi) }
 
     fun listedekiToplamSiparisAdedi(sepetListesi: List<Sepet>?) : Int{ return sepetRepo.listedekiToplamSiparisAdedi(sepetListesi) }
+
+    fun listedekiToplamSiparisAdedi(sepetListesi: List<Sepet>?, yemek_adi: String) : Int{ return listedekiToplamSiparisAdedi(sepetteYemegiFiltrele(yemek_adi,sepetListesi)) }
 
     //Ucret Methodları
     fun toplamSepetUcretiniHesapla() : Int{ return sepetRepo.toplamSepetUcretiniHesapla() }

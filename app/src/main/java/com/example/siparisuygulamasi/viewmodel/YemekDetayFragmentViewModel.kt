@@ -30,11 +30,11 @@ class YemekDetayFragmentViewModel : ViewModel()  {
 
     fun sepetiBas(){sepetRepo.sepetiBas()}
 
-    fun sepettenYemekCikar(yemek_adi:String){ sepetRepo.sepettenYemekCikar(yemek_adi) }
+    fun sepettenYemekCikar(yemek_adi:String){ sepetRepo.sepettenYemekSil(yemek_adi) }
 
-    fun siparisOlustur(yemek: Yemek, siparisAdedi:Int){ sepetRepo.siparisOlustur(yemek,siparisAdedi) }
+    fun siparisOlustur(yemek: Yemek, siparisAdedi:Int){ sepetRepo.sepeteEkle(yemek,siparisAdedi) }
 
-    fun sepetteYemegiFiltrele(yemek_adi: String, sepetListesi: List<Sepet>?): List<Sepet>?{ return sepetRepo.sepetteYemegiFiltrele(yemek_adi,sepetListesi) }
+    fun sepetteYemegiFiltrele(yemek_adi: String, sepetListesi: List<Sepet>?): List<Sepet>?{ return sepetRepo.sepetteYemegiFiltrele(yemek_adi) }
 
     fun listedekiToplamSiparisAdedi(sepetListesi: List<Sepet>?) : Int{ return sepetRepo.listedekiToplamSiparisAdedi(sepetListesi) }
 

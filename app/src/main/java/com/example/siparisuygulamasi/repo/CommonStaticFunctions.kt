@@ -1,5 +1,8 @@
 package com.example.siparisuygulamasi.repo
 
+import com.example.siparisuygulamasi.entity.Sepet
+import com.example.siparisuygulamasi.entity.Yemek
+
 object CommonStaticFunctions {
 
     fun gonderimUcretiniHesapla(sepetUcreti: Int):Int{

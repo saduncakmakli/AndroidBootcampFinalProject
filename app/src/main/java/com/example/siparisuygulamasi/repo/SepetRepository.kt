@@ -22,7 +22,8 @@ class SepetRepository () {
         return sepetListesi
     }
 
-    fun sepeteYemekEkle(yemek_adi:String, yemek_resim_adi:String, yemek_fiyat:Int, yemek_siparis_adet:Int){
+    //API PRIMARY-FUNCTION
+    fun sepeteEkle(yemek_adi:String, yemek_resim_adi:String, yemek_fiyat:Int, yemek_siparis_adet:Int){
         sepetDataAccessObject.sepeteYemekEkle(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,ActiveData.kullanici_adi).enqueue(object : Callback<CRUDCevap>{
             override fun onResponse(call: Call<CRUDCevap>?, response: Response<CRUDCevap>) {
                 val success = response.body().success
@@ -33,6 +34,10 @@ class SepetRepository () {
                 Log.e("DebugRepo", "Sepete Yemek Ekle Api Failure")
             }
         })
+    }
+
+    fun sepeteEkle(yemek:Yemek, siparisAdet:Int){
+        sepeteEkle(yemek.yemek_adi,yemek.yemek_resim_adi,yemek.yemek_fiyat,siparisAdet)
     }
 
     fun sepetiVeriTabanindanGuncelle(){
@@ -64,6 +69,17 @@ class SepetRepository () {
         })
     }
 
+    fun sepettenYemekSil(yemek_adi:String){
+        if (sepetListesi.value != null)
+            for (s in sepetListesi.value!!){
+                if (s.yemek_adi == yemek_adi) sepettenYemekSil(s.sepet_yemek_id)
+            }
+    }
+
+    //TURETILMIS/DERIVED FONKSIYONLAR
+
+    fun sepetiBas(){ sepetListesi.value?.let {  for (sepet in sepetListesi.value!!) Log.e("DebugFragmentVM", "Sepet ID:${sepet.sepet_yemek_id} Ad:${sepet.yemek_adi}") } }
+    //---
     fun sepetteYemegiFiltrele(yemek_adi: String, sepetListesi: List<Sepet>?): List<Sepet>?{
         if (sepetListesi != null ){
             val localSepetListesi = sepetListesi.toList() //Parametre olarak gelen listeyi kopyalamak için
@@ -78,6 +94,8 @@ class SepetRepository () {
         else return null
     }
 
+    fun sepetteYemegiFiltrele(yemek_adi: String): List<Sepet>?{ return sepetteYemegiFiltrele(yemek_adi,sepetListesi.value) }
+    //---
     fun listedekiToplamSiparisAdedi(sepetListesi: List<Sepet>?) : Int{
         var count = 0
         if (sepetListesi != null)
@@ -87,8 +105,13 @@ class SepetRepository () {
         return count
     }
 
-    fun toplamSepetUcretiniHesapla() : Int{
+    fun listedekiToplamSiparisAdedi(sepetListesi: List<Sepet>?, yemek_adi: String) : Int{ return listedekiToplamSiparisAdedi(sepetteYemegiFiltrele(yemek_adi, sepetListesi)) }
 
+    fun listedekiToplamSiparisAdedi() : Int{ return listedekiToplamSiparisAdedi(sepetListesi.value)}
+
+    fun listedekiToplamSiparisAdedi(yemek_adi: String) : Int{ return listedekiToplamSiparisAdedi(sepetListesi.value, yemek_adi) }
+    //---
+    fun toplamSepetUcretiniHesapla() : Int{
         var count = 0
         sepetListesi.value?.let{
             for (s in it){
@@ -98,7 +121,7 @@ class SepetRepository () {
         return count
     }
 
-    fun seciliSepetUcretiniHesapla(sepetListesi: List<Sepet>?) : Int {
+    fun toplamSepetUcretiniHesapla(sepetListesi: List<Sepet>?) : Int {
         var count = 0
         if (sepetListesi != null)
             for (s in sepetListesi) {
@@ -106,19 +129,16 @@ class SepetRepository () {
             }
         return count
     }
+    //---
 
+    /*
+    fun duzenlenmisSepetListesiDondur(duzensizSepetListesi:List<Sepet>?, yemekListesi:List<Yemek>): List<Sepet>?{
+        var duzenliSepet = ArrayList<Sepet>()
+        for (yemek in yemekListesi){
 
-    fun sepettenYemekCikar(yemek_adi:String){
-        if (sepetListesi.value != null)
-        for (s in sepetListesi.value!!){
-            if (s.yemek_adi == yemek_adi) sepettenYemekSil(s.sepet_yemek_id) }
+        }
     }
-
-    fun siparisOlustur(yemek:Yemek, siparisAdet:Int){
-        sepeteYemekEkle(yemek.yemek_adi,yemek.yemek_resim_adi,yemek.yemek_fiyat,siparisAdet)
-    }
-
-    fun sepetiBas(){ sepetListesi.value?.let {  for (sepet in sepetListesi.value!!) Log.e("DebugFragmentVM", "Sepet ID:${sepet.sepet_yemek_id} Ad:${sepet.yemek_adi}") } }
+    */
 
 
 

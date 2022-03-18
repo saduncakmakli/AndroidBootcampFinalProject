@@ -25,7 +25,7 @@ class SepetFragment : Fragment() {
      desing = DataBindingUtil.inflate(inflater,R.layout.fragment_sepet, container, false)
 
      //TOOLBAR
-     desing.toolbarTitle = "Sepet"
+     desing.toolbarTitle = "Sepetim"
 
      //ADAPTER
      desing.sepetRecyclerView.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
