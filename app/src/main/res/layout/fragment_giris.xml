@@ -15,21 +15,6 @@
         android:paddingBottom="32dp"
         tools:context=".fragment.GirisFragment">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarGiris"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_baseline_shopping_basket_24"
-
-            app:subtitle="@{toolbarSubTitle}"
-            app:title="@{toolbarTitle}" />
-
         <Button
             android:id="@+id/button"
             android:layout_width="0dp"
@@ -47,13 +32,13 @@
             android:id="@+id/imageViewGirisLogo"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="120dp"
             android:scaleType="fitCenter"
             android:src="@drawable/app_icon_500"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbarGiris" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputKullaniciAdi"
@@ -62,6 +47,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="64dp"
             android:layout_marginEnd="64dp"
+            app:hintTextColor="@color/primary_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,6 +57,7 @@
                 android:id="@+id/editTextKullaniciAdi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:hint="Kullanıcı Adı" />
         </com.google.android.material.textfield.TextInputLayout>
 

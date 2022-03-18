@@ -7,4 +7,27 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- MY STANDART COLOR -->
+    <color name="primary_color">@color/amber</color>
+    <color name="primary_light_color">@color/light_amber</color>
+    <color name="primary_dark_color">@color/dark_amber</color>
+    <color name="primary_variant_color">@color/deep_orange</color>
+    <color name="primary_divider_color">@color/amber_divider_deep_orange</color>
+
+    <color name="primary_icon_color">#212121</color>
+    <color name="primary_text_color">#212121</color>
+    <color name="primary_text_light_color">#757575</color>
+
+    <!-- MY COLOR PALETTE 1 -->
+    <color name="amber">#FFC107</color>
+    <color name="light_amber">#FFECB3</color>
+    <color name="dark_amber">#FFA000</color>
+    <color name="deep_orange">#FF5722</color>
+    <color name="amber_divider_deep_orange">#BDBDBD</color>
+
+    <!-- MY COLOR PALETTE 2 -->
+
+
+
 </resources>

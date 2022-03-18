@@ -11,14 +11,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/material_dynamic_neutral99"
         tools:context=".fragment.YemekDetayFragment">
 
         <Button
             android:id="@+id/detayButtonArttir"
             android:layout_width="45dp"
             android:layout_height="55dp"
-            android:onClick="@{() -> yemekDetayFragment.buttonArttir()}"
             android:layout_marginStart="8dp"
+            android:onClick="@{() -> yemekDetayFragment.buttonArttir()}"
             app:icon="@drawable/ic_baseline_arrow_forward_ios_24"
             app:layout_constraintStart_toEndOf="@+id/detayTextViewAdet"
             app:layout_constraintTop_toTopOf="@+id/detayButtonAzalt" />
@@ -27,8 +28,8 @@
             android:id="@+id/detayButtonAzalt"
             android:layout_width="45dp"
             android:layout_height="56dp"
-            android:onClick="@{() -> yemekDetayFragment.buttonAzalt()}"
             android:layout_marginEnd="8dp"
+            android:onClick="@{() -> yemekDetayFragment.buttonAzalt()}"
             app:icon="@drawable/ic_baseline_arrow_back_ios_24"
             app:layout_constraintEnd_toStartOf="@+id/detayTextViewAdet"
             app:layout_constraintTop_toBottomOf="@+id/detayTextViewFiyat" />
@@ -48,9 +49,10 @@
             android:id="@+id/detayToolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/primary_dark_color"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
+            app:title="@{toolbarTitle}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -60,9 +62,10 @@
             android:id="@+id/detayTextViewUrunIsmi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{yemekDetayFragment.yemekNesnesi.yemek_adi}"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/sansita_swashed"
+            android:text="@{yemekDetayFragment.yemekNesnesi.yemek_adi}"
+            android:textColor="@color/primary_text_color"
             android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,9 +76,9 @@
             android:id="@+id/detayTextViewFiyat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{String.valueOf(yemekDetayFragment.yemekNesnesi.yemek_fiyat)+" ₺"}'
             android:layout_marginTop="16dp"
             android:fontFamily="@font/sansita_swashed"
+            android:text='@{String.valueOf(yemekDetayFragment.yemekNesnesi.yemek_fiyat)+" ₺"}'
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -85,11 +88,11 @@
 
         <TextView
             android:id="@+id/detayTextViewToplamFiyat"
-            android:layout_marginBottom="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{String.valueOf(yemekDetayFragment.yemekNesnesi.yemek_fiyat*yemekDetayFragment.yemekAdet)+" ₺"}'
+            android:layout_marginBottom="2dp"
             android:fontFamily="@font/sansita_swashed"
+            android:text='@{String.valueOf(yemekDetayFragment.yemekNesnesi.yemek_fiyat*yemekDetayFragment.yemekAdet)+" ₺"}'
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/detayButtonAdetGuncelle"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,8 +116,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="Sepeti Güncelle"
             android:onClick="@{() -> yemekDetayFragment.siparisiGuncelle()}"
+            android:text="Sepeti Güncelle"
             android:textAllCaps="false"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"

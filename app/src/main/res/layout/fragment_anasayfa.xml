@@ -3,25 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <data>
         <variable name="toolbarTitle" type="String" />
         <variable name="anasayfaFragment" type="com.example.siparisuygulamasi.fragment.AnasayfaFragment" />
         <variable name="menuAdapter" type="com.example.siparisuygulamasi.adapter.AnasayfaMenuAdapter" />
-        <variable name="welcomeMessage" type="String" />
-        <import type="androidx.recyclerview.widget.StaggeredGridLayoutManager"/>
+        <import type="com.example.siparisuygulamasi.entity.ActiveData"/>
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/material_dynamic_neutral99"
         tools:context=".fragment.AnasayfaFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarAnasayfa"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/primary_dark_color"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +38,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:adapter="@{menuAdapter}"
-            android:background="@color/white"
+            android:background="@color/material_dynamic_neutral99"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,12 +47,12 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
+            android:id="@+id/cardViewProfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/material_dynamic_neutral95"
+            android:backgroundTint="@color/material_dynamic_neutral90"
             app:cardCornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbarAnasayfa">
@@ -84,7 +85,7 @@
                     android:id="@+id/textViewWelcome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{welcomeMessage}"
+                    android:text='@{"Hoşgeldin " + ActiveData.kullanici_adi}'
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/cardView"
@@ -100,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cardView2">
+            app:layout_constraintTop_toTopOf="@+id/cardViewProfil">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
@@ -111,22 +112,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="60dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingTop="52dp"
                     android:paddingBottom="16dp">
 
                     <ImageView
                         android:id="@+id/imageViewSepet"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:onClick="@{(view) -> anasayfaFragment.sepetSayfasınaGec(view)}"
                         android:scaleType="fitCenter"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/cart" />
+
+                    <ImageView
+                        android:id="@+id/imageViewSiparis"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/motorcycle" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -144,8 +154,8 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Gönderim Ücreti 0₺"
                 android:textSize="16sp"
+                android:text='@{anasayfaFragment.viewModel.sepetinGonderimUcretiniYazdır()}'
                 app:layout_constraintBottom_toTopOf="@id/textViewSepetUcreti"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -155,8 +165,8 @@
                 android:id="@+id/textViewSepetUcreti"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text='@{"Sepet Ücreti: 0₺"}'
                 android:textSize="16sp"
+                android:text='@{anasayfaFragment.viewModel.toplamSepetUcretiniYazdır()}'
                 app:layout_constraintEnd_toEndOf="@+id/textViewGonderimUcreti"
                 app:layout_constraintStart_toStartOf="@+id/textViewGonderimUcreti"
                 app:layout_constraintTop_toBottomOf="@+id/textViewGonderimUcreti"
@@ -166,8 +176,8 @@
                 android:id="@+id/textViewToplamUcret"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Toplam Ücret: 0₺"
                 android:textSize="16sp"
+                android:text='@{anasayfaFragment.viewModel.toplamUcretiYazdır()}'
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/textViewSepetUcreti"
@@ -178,16 +188,46 @@
             <Button
                 android:id="@+id/buttonSepetiOnayla"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="Sepeti Onayla"
                 android:textAllCaps="false"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textViewSepetUcreti"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutLottie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/design_default_color_background"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/food_is_ready" />
+            <!--app:lottie_repeatCount="2"-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

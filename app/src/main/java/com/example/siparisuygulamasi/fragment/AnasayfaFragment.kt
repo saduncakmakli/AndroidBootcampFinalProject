@@ -28,7 +28,7 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
     lateinit var viewModel:AnasayfaFragmentViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        desing= DataBindingUtil.inflate(inflater, R.layout.fragment_anasayfa, container, false)
+        desing = DataBindingUtil.inflate(inflater, R.layout.fragment_anasayfa, container, false)
         desing.anasayfaFragment = this
 
         //TOOLBAR
@@ -59,30 +59,11 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
 
         }
 
-        desing.welcomeMessage = "Hoşgeldin ${ActiveData.kullanici_adi}."
-        //Welcome message oto-gone timer.
-        val dp = requireContext().resources.displayMetrics.density+0.5f
-        var firstStart = true
-        val timerWelcomeMessage = object: CountDownTimer(4000, 2000) {
-            override fun onTick(millisUntilFinished: Long) {
-                if ((desing.textViewWelcome.visibility == View.VISIBLE) && !firstStart){
-                    desing.textViewWelcome.visibility = View.GONE
-                    desing.constraintLayoutProfile.setPadding(5,5,5,5)
-                    desing.imageViewProfile.layoutParams.width = (38 * dp).toInt()
-                    desing.imageViewProfile.layoutParams.height = (38 * dp).toInt()
-                    Log.e("DebugFragment", "Welcome message is gone.")
-                }
-                Log.e("DebugFragment", "Timer tick")
-                firstStart = false
-            }
-            override fun onFinish() {}
-        }
+        firstStart() //Lottie animation, ve karşılama mesajı için
+        //Veri tabanından güncelleme
+        //guncelle() //Sayfayı girişte guncelleme için
+        startRegularlyApiRequest() //Sayfayı hem girişte hemde düzenli olarak güncellenmek için
 
-        //Timer and Coroutine Job Starters
-        timerWelcomeMessage.start()
-        startRegularlyApiRequest()
-
-        //guncelle()
         return desing.root
     }
 
@@ -121,6 +102,12 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
         Navigation.findNavController(v).navigate(direction)
     }
 
+    fun sepetSayfasınaGec(v:View){
+        ActiveData.menuAdapterActive = false
+        val direction = AnasayfaFragmentDirections.actionAnasayfaFragmentToSepetFragment()
+        Navigation.findNavController(v).navigate(direction)
+    }
+
     fun guncelle(){
         viewModel.yemekleriGuncelle()
         viewModel.sepetiGuncelle()
@@ -128,19 +115,10 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     fun ekraniGuncelle(){
-        var sepetUcreti = 0
-        var gonderimUcreti = 0
-
-        viewModel.sepetListesi.value?.let {
-            sepetUcreti = viewModel.toplamSepetUcretiniHesapla(it)
-            gonderimUcreti = viewModel.gonderimUcretiniHesapla(sepetUcreti)
-        }
-
-        Log.e("Debug", "Anasayfa Ekran Guncellendi Sepet Ücreti:${sepetUcreti}, Gönderim Ücreti:${gonderimUcreti}")
-        desing.textViewSepetUcreti.text = "Sepet Ücreti: ${sepetUcreti}₺"
-        desing.textViewGonderimUcreti.text =if (sepetUcreti < 75) "Gönderim Ücreti: ${gonderimUcreti}₺" else "75₺ Üzeri Alışverişe, GÖNDERİM ÜCRETİ YOK!"
-        desing.textViewToplamUcret.text = "Toplam Ücret: ${gonderimUcreti+sepetUcreti}₺"
-
+        Log.e("Debug", "Anasayfa Ekran Guncellendi Sepet Ücreti:${viewModel.toplamSepetUcretiniHesapla()}, Gönderim Ücreti:${viewModel.sepetinGonderimUcretiniHesapla()}")
+        desing.textViewSepetUcreti.text = viewModel.toplamSepetUcretiniYazdır()
+        desing.textViewGonderimUcreti.text = viewModel.sepetinGonderimUcretiniYazdır()
+        desing.textViewToplamUcret.text = viewModel.toplamUcretiYazdır()
     }
 
     //Oto API Request for update Data regularly
@@ -158,6 +136,57 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
 
     fun cancelRegularlyApiRequest() {
         apiRequestJob?.cancel()
+    }
+
+    fun firstStart(){
+        if (ActiveData.sepetFragmentHasNeverBeenShownYet) {
+
+            ActiveData.sepetFragmentHasNeverBeenShownYet = false
+            desing.animationView.playAnimation()
+            desing.constraintLayoutLottie.visibility = View.VISIBLE
+            desing.constraintLayoutProfile.visibility = View.GONE
+
+            //Welcome message oto-gone timer.
+            val dp = requireContext().resources.displayMetrics.density+0.5f
+            var welcomeMessageTimerIsStarted = true
+            val timerWelcomeMessage = object: CountDownTimer(4000, 2000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    if ((desing.textViewWelcome.visibility == View.VISIBLE) && !welcomeMessageTimerIsStarted){
+                        desing.textViewWelcome.visibility = View.GONE
+                        desing.constraintLayoutProfile.setPadding(5,5,5,5)
+                        desing.imageViewProfile.layoutParams.width = (38 * dp).toInt()
+                        desing.imageViewProfile.layoutParams.height = (38 * dp).toInt()
+                        Log.e("DebugFragment", "Welcome message is gone.")
+                    }
+                    Log.e("DebugFragment", "Timer tick")
+                    welcomeMessageTimerIsStarted = false
+                }
+                override fun onFinish() {}
+            }
+
+            //Lottie oto-gone timer.
+            var lottieTimerIsStarted = true
+            val timerLottieHider = object: CountDownTimer(4000, 2000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    if (!lottieTimerIsStarted){
+                        desing.animationView.pauseAnimation()
+                        desing.constraintLayoutLottie.visibility = View.GONE
+                        desing.constraintLayoutProfile.visibility = View.VISIBLE
+                        timerWelcomeMessage.start()
+                    }
+                    Log.e("DebugFragment", "Lottie Timer tick")
+                    lottieTimerIsStarted = false
+                }
+                override fun onFinish() {}
+            }
+
+            //Timer and Coroutine Job Starters
+            timerLottieHider.start()
+
+        }else{
+            desing.textViewWelcome.visibility = View.GONE
+            desing.cardViewProfil.backgroundTintList = (requireContext().resources.getColorStateList(com.google.android.material.R.color.material_dynamic_neutral95))
+        }
     }
 
 

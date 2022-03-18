@@ -36,6 +36,8 @@ class GirisFragment : Fragment() {
             }
 
         }
+
+        ActiveData.sepetFragmentHasNeverBeenShownYet = true
         return design.root
     }
 

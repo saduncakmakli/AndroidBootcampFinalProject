@@ -13,7 +13,8 @@ import com.example.siparisuygulamasi.viewmodel.AnasayfaFragmentViewModel
 
 class AnasayfaMenuAdapter(var mContext:Context,
                           var viewModel:AnasayfaFragmentViewModel,
-                          var fragment:AnasayfaFragment) : RecyclerView.Adapter<AnasayfaMenuAdapter.CardDesingHolder>() {
+                          var fragment:AnasayfaFragment
+                          ) : RecyclerView.Adapter<AnasayfaMenuAdapter.CardDesingHolder>() {
     init {
         Log.e("DebugAdapter", "MenuAdapterInit")
     }

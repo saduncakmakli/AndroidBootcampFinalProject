@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable name="toolbarTitle" type="String" />
+        <variable name="sepetFragment" type="com.example.siparisuygulamasi.fragment.SepetFragment"/>
+        <variable name="sepetAdapter" type="com.example.siparisuygulamasi.adapter.SepetAdapter" />
+        <import type="com.example.siparisuygulamasi.entity.ActiveData"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.SepetFragment" />
+        tools:context=".fragment.SepetFragment" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/sepetToolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_dark_color"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/toolbar"
+            app:title="@{toolbarTitle}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sepetRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adapter="@{sepetAdapter}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sepetToolbar">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

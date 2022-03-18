@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_anasayfaFragment_to_yemekDetayFragment"
             app:destination="@id/yemekDetayFragment" />
+        <action
+            android:id="@+id/action_anasayfaFragment_to_sepetFragment"
+            app:destination="@id/sepetFragment" />
     </fragment>
     <fragment
         android:id="@+id/sepetFragment"

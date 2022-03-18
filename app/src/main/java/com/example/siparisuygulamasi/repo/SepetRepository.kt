@@ -87,14 +87,26 @@ class SepetRepository () {
         return count
     }
 
-    fun toplamSepetUcretiniHesapla(sepetListesi: List<Sepet>?) : Int{
+    fun toplamSepetUcretiniHesapla() : Int{
+
+        var count = 0
+        sepetListesi.value?.let{
+            for (s in it){
+                count += s.yemek_siparis_adet*s.yemek_fiyat
+            }
+        }
+        return count
+    }
+
+    fun seciliSepetUcretiniHesapla(sepetListesi: List<Sepet>?) : Int {
         var count = 0
         if (sepetListesi != null)
-            for (s in sepetListesi){
-                count += s.yemek_siparis_adet*s.yemek_fiyat
+            for (s in sepetListesi) {
+                count += s.yemek_siparis_adet * s.yemek_fiyat
             }
         return count
     }
+
 
     fun sepettenYemekCikar(yemek_adi:String){
         if (sepetListesi.value != null)
