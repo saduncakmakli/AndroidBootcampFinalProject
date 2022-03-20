@@ -37,6 +37,9 @@
         <argument
             android:name="sepetYemekAdet"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_yemekDetayFragment_to_anasayfaFragment"
+            app:destination="@id/anasayfaFragment" />
     </fragment>
     <fragment
         android:id="@+id/girisFragment"

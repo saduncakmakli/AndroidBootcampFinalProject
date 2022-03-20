@@ -1,6 +1,7 @@
 package com.example.siparisuygulamasi.fragment
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -29,7 +30,7 @@ class SepetFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         desing = DataBindingUtil.inflate(inflater,R.layout.fragment_sepet, container, false)
         ActiveData.sepetAdapterActive = false
-        ActiveData.sepetRecyclerViewCardsShown = false
+        viewModel.sepetRecyclerViewCardsShown = false
 
         //TOOLBAR
         desing.toolbarTitle = "Sepetim"
@@ -65,6 +66,29 @@ class SepetFragment : Fragment() {
 
         //RW LAYOUT MANAGER
         desing.sepetRecyclerView.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+
+        //LOTTIE AND CART İS EMPTY CONTROL
+        //Lottie oto-gone timer.
+        var TimerIsStarted = true
+        val timer = object: CountDownTimer(1000, 500) {
+            override fun onTick(millisUntilFinished: Long) {
+                if (!TimerIsStarted){
+                    if (viewModel.sepetRecyclerViewCardsShown == true) {
+                        desing.buttonSepeteUrunEkle.visibility = View.GONE
+                        desing.textViewSepetBos.visibility = View.GONE
+                    }else{
+                        desing.buttonSepeteUrunEkle.visibility = View.VISIBLE
+                        desing.textViewSepetBos.visibility = View.VISIBLE
+                    }
+                }
+                Log.e("DebugFragmentAnasayfa", "Lottie Timer tick")
+                TimerIsStarted = false
+            }
+            override fun onFinish() {}
+        }
+
+        //Timer and Coroutine Job Starters
+        timer.start()
 
 
         return desing.root

@@ -1,14 +1,17 @@
 package com.example.siparisuygulamasi.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.siparisuygulamasi.R
 import com.example.siparisuygulamasi.databinding.FragmentYemekDetayBinding
@@ -30,7 +33,10 @@ class YemekDetayFragment : Fragment() {
 
         //TOOLBAR
         desing.toolbarTitle = "Ürün Detayı"
+
+        setHasOptionsMenu(true)
         (activity as AppCompatActivity).setSupportActionBar(desing.detayToolbar)
+        (activity as AppCompatActivity).getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
 
         //OBSERVER
         viewModel.yemekListesi.observe(viewLifecycleOwner){
@@ -95,5 +101,17 @@ class YemekDetayFragment : Fragment() {
             adetDegisiklik = false
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.e("DebugSepetFragment", "Tollbarda bir tuşa basıldı.")
+        if (item.itemId == android.R.id.home) {
+            Log.e("DebugSepetFragment", "Geri Tuşuna Basıldı.")
+            //getParentFragmentManager().popBackStack() //Hataya sebep oluyor
+            val direction = YemekDetayFragmentDirections.actionYemekDetayFragmentToAnasayfaFragment()
+            Navigation.findNavController(requireView()).navigate(direction)
+            return true
+        }
+        else return super.onOptionsItemSelected(item)
     }
 }

@@ -14,6 +14,4 @@ object ActiveData {
     Recyclerview On scroll property seems unimportant for this bug.
      */
     var sepetAdapterActive = false
-
-    var sepetRecyclerViewCardsShown = false
 }

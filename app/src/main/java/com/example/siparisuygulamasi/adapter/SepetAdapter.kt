@@ -35,7 +35,7 @@ class SepetAdapter(var mContext: Context,
         val desing = SepetCardBinding.inflate(layoutInflater, parent, false)
 
         Log.e("DebugAdapter", "SepetAdapter")
-        ActiveData.sepetRecyclerViewCardsShown = true
+        viewModel.sepetRecyclerViewCardsShown = true
         return CardDesingHolder(desing)
     }
 

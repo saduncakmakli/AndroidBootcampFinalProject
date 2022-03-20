@@ -15,6 +15,7 @@ class SepetFragmentViewModel : ViewModel()  {
     var sepetListesi = MutableLiveData<List<Sepet>>()
     val yemekRepo = YemekRepository()
     val sepetRepo = SepetRepository()
+    var sepetRecyclerViewCardsShown = false
 
     init {
         Log.e("DebugFragmentVM", "SepetFVM init")
