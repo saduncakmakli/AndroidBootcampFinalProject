@@ -42,12 +42,17 @@ class SepetRepository () {
     }
 
     fun sepetiVeriTabanindanGuncelle(){
+        Log.e("DebugRepo", "sepetiVeriTabanindanGuncelle()")
         sepetDataAccessObject.sepettekiYemekleriGetir(ActiveData.kullanici_adi).enqueue(object : Callback<SepetCevap>{
             override fun onResponse(call: Call<SepetCevap>?, response: Response<SepetCevap>) {
-                val success = response.body()!!.success
-                val liste = response.body()!!.sepet_yemekler
-                sepetListesi.value = liste
-                Log.e("DebugRepo", "Sepetteki Yemekleri Getir Api success -> $success")
+                var success = 0
+                var liste: List<Sepet>?
+                response.body()?.let {
+                    success = it.success
+                    liste = it.sepet_yemekler
+                    if (!liste.isNullOrEmpty()) sepetListesi.value = liste
+                    Log.e("DebugRepo", "Sepetteki Yemekleri Getir Api success -> $success")
+                }
             }
             override fun onFailure(call: Call<SepetCevap>?, t: Throwable?) {
                 Log.e("DebugRepo", "Sepetteki Yemekleri Getir Api Failure")
@@ -156,7 +161,7 @@ class SepetRepository () {
                         if (siparisAdet > 0) duzenliSepet.add(birlestirilmisSiparis)
                     }
                 }
-                if (duzenliSepet.size > 0) return duzenliSepet
+                if (duzenliSepet.isNotEmpty()) return duzenliSepet
             }
         }
         return null

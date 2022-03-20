@@ -16,6 +16,68 @@
         android:layout_height="match_parent"
         tools:context=".fragment.SepetFragment">
 
+        <TextView
+            android:id="@+id/textViewToplamUcret2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonSepetiOnayla2"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Toplam Ücret: 35.99₺" />
+
+        <TextView
+            android:id="@+id/textViewSepetUcreti2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewToplamUcret2"
+            app:layout_constraintEnd_toStartOf="@+id/buttonSepetiOnayla2"
+            app:layout_constraintStart_toStartOf="@+id/textViewToplamUcret2"
+            tools:text="Sepet Ücreti: 30₺" />
+
+        <TextView
+            android:id="@+id/textViewGonderimUcreti2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewSepetUcreti2"
+            app:layout_constraintEnd_toStartOf="@+id/buttonSepetiOnayla2"
+            app:layout_constraintStart_toStartOf="@+id/textViewToplamUcret2"
+            tools:text="Gönderim Ücreti 5.99₺" />
+
+        <Button
+            android:id="@+id/buttonSepetiOnayla2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Sepeti Onayla"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewToplamUcret2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewGonderimUcreti2" />
+
+        <TextView
+            android:id="@+id/textViewSepetBos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Üzgünüm... Henüz sepetinde gösterebileceğim bir ürün bulunmuyor."
+            android:textAlignment="center"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sepetToolbar"
+            tools:visibility="gone" />
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/sepetToolbar"
             android:layout_width="0dp"
@@ -29,35 +91,40 @@
             app:menu="@menu/toolbar"
             app:title="@{toolbarTitle}" />
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sepetRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="24dp"
+            android:adapter="@{sepetAdapter}"
+            app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sepetToolbar">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        </androidx.recyclerview.widget.RecyclerView>
 
-                <Button
-                    android:id="@+id/buttonSepetiGuncelle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sepeti Güncelle" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toTopOf="@+id/buttonSepetiOnayla2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/sepetRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adapter="@{sepetAdapter}">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-            </LinearLayout>
-        </ScrollView>
+        <Button
+            android:id="@+id/buttonSepeteUrunEkle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Sepetine ürün ekle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewSepetBos"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

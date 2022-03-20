@@ -137,7 +137,7 @@
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardViewButtonArttır"
+                                android:id="@+id/cardViewButtonArttir"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:cardCornerRadius="5dp"
@@ -161,7 +161,7 @@
                                 android:layout_marginStart="8dp"
                                 app:cardCornerRadius="5dp"
                                 app:layout_constraintBottom_toBottomOf="@+id/cardViewButonAzalt"
-                                app:layout_constraintStart_toEndOf="@+id/cardViewButtonArttır"
+                                app:layout_constraintStart_toEndOf="@+id/cardViewButtonArttir"
                                 app:layout_constraintTop_toTopOf="@+id/cardViewButonAzalt">
 
                                 <ImageView

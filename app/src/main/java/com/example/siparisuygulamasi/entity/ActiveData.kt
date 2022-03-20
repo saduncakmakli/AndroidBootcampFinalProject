@@ -3,10 +3,10 @@ package com.example.siparisuygulamasi.entity
 import com.example.siparisuygulamasi.retrofit.ApiState
 
 object ActiveData {
-    lateinit var kullanici_adi:String
-    var menuAdapterActive = false
-    var anasayfaFragmentHasNeverBeenShownYet = true
+    lateinit var kullanici_adi:String //For login
 
+    var menuAdapterActive = false //For adapter update only when necessary //When fragment load or new data accept
+    var anasayfaFragmentHasNeverBeenShownYet = true //For greeting user and lottie animation
 
     /*
     sepetAdapterActive -> Identified due to unresolved bug :/
@@ -14,4 +14,6 @@ object ActiveData {
     Recyclerview On scroll property seems unimportant for this bug.
      */
     var sepetAdapterActive = false
+
+    var sepetRecyclerViewCardsShown = false
 }
