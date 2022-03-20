@@ -77,7 +77,7 @@ class SepetFragmentViewModel : ViewModel()  {
                 }
             }
         }
-        ActiveData.sepetAdapterActive = false
+        //ActiveData.sepetAdapterActive = false //Adaptörün yenilenmesi hataya sebep oluyor.
         return sepet_list
     }
 

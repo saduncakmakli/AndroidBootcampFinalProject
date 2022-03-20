@@ -26,7 +26,6 @@ class SepetFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         desing = DataBindingUtil.inflate(inflater,R.layout.fragment_sepet, container, false)
-        viewModel.sepetiGuncelle()
         ActiveData.sepetAdapterActive = false
 
 
@@ -39,13 +38,12 @@ class SepetFragment : Fragment() {
         }
 
         viewModel.sepetListesi.observe(viewLifecycleOwner){
-
+            //ADAPTER
             viewModel.yemekListesi.value?.let { yemekListesi ->
-                it?.let {
-                    if (!ActiveData.sepetAdapterActive && it.size > 0){
-                        val filtreliSepet = viewModel.duzenlenmisSepetListesi(it, yemekListesi)!!
-                        //viewModel.sepetRepo.sepetiBas(filtreliSepet, "DebugSepet")
-                        ActiveData.sepetRecyclerviewDisplayCorrectly = false
+                viewModel.sepetListesi.value?.let { sepetListesi ->
+                    if (ActiveData.sepetAdapterActive == false && sepetListesi.size > 0){
+                        val filtreliSepet = viewModel.duzenlenmisSepetListesi(sepetListesi, yemekListesi)!!
+                        viewModel.sepetRepo.sepetiBas(filtreliSepet, "DebugSepet")
                         val adapter = SepetAdapter(requireContext(), viewModel, this, filtreliSepet)
                         desing.sepetAdapter = adapter
                         Log.e("DebugSepetFragment", "Sepet Menu Adapter Updated")
@@ -57,6 +55,8 @@ class SepetFragment : Fragment() {
 
         //RW LAYOUT MANAGER
         desing.sepetRecyclerView.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+
+
         return desing.root
     }
 
@@ -66,24 +66,8 @@ class SepetFragment : Fragment() {
         viewModel = tempViewModel
     }
 
-    fun azaltButton(sepet: Sepet)
+    fun sepetiGuncelle()
     {
-        runBlocking {
-            viewModel.sepetListesi.value = viewModel.chainingRequestSiparisiGuncelle(sepet,sepet.yemek_siparis_adet-1)
-        }
-    }
 
-    fun arttirButton(sepet: Sepet)
-    {
-        runBlocking {
-            viewModel.sepetListesi.value = viewModel.chainingRequestSiparisiGuncelle(sepet,sepet.yemek_siparis_adet+1)
-        }
-    }
-
-    fun silButton(sepet: Sepet)
-    {
-        runBlocking {
-            viewModel.sepetListesi.value = viewModel.chainingRequestSiparisiGuncelle(sepet,0)
-        }
     }
 }

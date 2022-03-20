@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.siparisuygulamasi.databinding.SepetCardBinding
-import com.example.siparisuygulamasi.entity.ActiveData.sepetRecyclerviewDisplayCorrectly
 import com.example.siparisuygulamasi.entity.Sepet
 import com.example.siparisuygulamasi.fragment.SepetFragment
 import com.example.siparisuygulamasi.picasso.PicassoUtils
 import com.example.siparisuygulamasi.viewmodel.SepetFragmentViewModel
+import kotlinx.coroutines.runBlocking
 
 class SepetAdapter(var mContext: Context,
                    var viewModel:SepetFragmentViewModel,
@@ -34,7 +34,6 @@ class SepetAdapter(var mContext: Context,
         val desing = SepetCardBinding.inflate(layoutInflater, parent, false)
 
         Log.e("DebugAdapter", "SepetAdapter")
-        sepetRecyclerviewDisplayCorrectly = true
         return CardDesingHolder(desing)
     }
 
@@ -45,13 +44,39 @@ class SepetAdapter(var mContext: Context,
         cardDesing.sepetFragment = fragment
         PicassoUtils.yemekResimGoster(sepet.yemek_resim_adi, cardDesing.imageViewItem)
 
+        cardDesing.buttonArttir.setOnClickListener {
+            runBlocking {
+                viewModel.sepetListesi.value = viewModel.chainingRequestSiparisiGuncelle(sepet,sepet.yemek_siparis_adet+1)
+            }
+            sepet.yemek_siparis_adet += 1
+            cardDesing.textViewSepetFiyat.text = "${sepet.yemek_siparis_adet*sepet.yemek_fiyat} ₺"
+            cardDesing.textViewAdet.text = sepet.yemek_siparis_adet.toString()
+        }
+
+        cardDesing.buttonAzalt.setOnClickListener {
+            runBlocking {
+                viewModel.sepetListesi.value = viewModel.chainingRequestSiparisiGuncelle(sepet,sepet.yemek_siparis_adet-1)
+            }
+            sepet.yemek_siparis_adet -= 1
+            cardDesing.textViewSepetFiyat.text = "${sepet.yemek_siparis_adet*sepet.yemek_fiyat} ₺"
+            cardDesing.textViewAdet.text = sepet.yemek_siparis_adet.toString()
+        }
+
+        cardDesing.cardViewSepettenSil.setOnClickListener {
+            runBlocking {
+                viewModel.sepetListesi.value = viewModel.chainingRequestSiparisiGuncelle(sepet,0)
+            }
+            sepet.yemek_siparis_adet = 0
+            cardDesing.textViewSepetFiyat.text = "${sepet.yemek_siparis_adet*sepet.yemek_fiyat} ₺"
+            cardDesing.textViewAdet.text = sepet.yemek_siparis_adet.toString()
+        }
     }
 
     override fun getItemCount(): Int {
         sepetListesi?.let {
             Log.e("DebugAdapter", "SepetAdapter-getItemCount ${it.size}")
             return it.size }
-        Log.e("DebugAdapter", "SepetAdapter-getItemCount Zero0")
+        Log.e("DebugAdapter", "SepetAdapter-getItemCount Zero")
         return 0
     }
 }

@@ -42,6 +42,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <Button
+                    android:id="@+id/buttonSepetiGuncelle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sepeti Güncelle" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/sepetRecyclerView"
                     android:layout_width="match_parent"
@@ -49,12 +55,6 @@
                     android:adapter="@{sepetAdapter}">
 
                 </androidx.recyclerview.widget.RecyclerView>
-
-                <Button
-                    android:id="@+id/buttonYemekEkle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Yemek Ekle" />
 
             </LinearLayout>
         </ScrollView>

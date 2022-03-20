@@ -91,7 +91,6 @@
                                     android:id="@+id/buttonAzalt"
                                     android:layout_width="45dp"
                                     android:layout_height="56dp"
-                                    android:onClick="@{() -> sepetFragment.azaltButton(sepetObject)}"
                                     android:background="@color/primary_dark_color"
                                     app:srcCompat="@drawable/ic_baseline_keyboard_arrow_left_40" />
 
@@ -146,10 +145,9 @@
                                 app:layout_constraintTop_toTopOf="@+id/cardViewButonAzalt">
 
                                 <ImageView
-                                    android:id="@+id/buttonArttır"
+                                    android:id="@+id/buttonArttir"
                                     android:layout_width="45dp"
                                     android:layout_height="56dp"
-                                    android:onClick="@{() -> sepetFragment.arttirButton(sepetObject)}"
                                     android:background="@color/primary_dark_color"
                                     app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_40" />
 
@@ -170,7 +168,6 @@
                                     android:id="@+id/imageViewSepettenSil"
                                     android:layout_width="45dp"
                                     android:layout_height="56dp"
-                                    android:onClick="@{() -> sepetFragment.silButton(sepetObject)}"
                                     android:background="@color/primary_dark_color"
                                     app:srcCompat="@drawable/ic_baseline_delete_24" />
 
