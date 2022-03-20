@@ -9,4 +9,10 @@ object ActiveData {
     var anasayfaFragmentHasNeverBeenShownYet = true
 
 
+    /*
+    Identified due to unresolved bug :/
+    The content of the recyclerview was not being displayed if the content of the RecyclerView moved beyond the screen's visible area.
+    Recyclerview On scroll property seems unimportant for this bug.
+     */
+    var sepetRecyclerviewDisplayCorrectly = false
 }

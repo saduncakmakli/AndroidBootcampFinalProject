@@ -11,9 +11,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contraintLayoutSepetFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.SepetFragment" >
+        tools:context=".fragment.SepetFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/sepetToolbar"
@@ -28,15 +29,35 @@
             app:menu="@menu/toolbar"
             app:title="@{toolbarTitle}" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sepetRecyclerView"
-            android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:adapter="@{sepetAdapter}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sepetToolbar">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sepetRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adapter="@{sepetAdapter}">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/buttonYemekEkle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Yemek Ekle" />
+
+            </LinearLayout>
+        </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

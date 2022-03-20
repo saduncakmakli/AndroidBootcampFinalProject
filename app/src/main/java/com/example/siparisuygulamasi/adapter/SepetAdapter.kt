@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.siparisuygulamasi.databinding.SepetCardBinding
+import com.example.siparisuygulamasi.entity.ActiveData.sepetRecyclerviewDisplayCorrectly
 import com.example.siparisuygulamasi.entity.Sepet
 import com.example.siparisuygulamasi.fragment.SepetFragment
 import com.example.siparisuygulamasi.picasso.PicassoUtils
@@ -33,7 +34,7 @@ class SepetAdapter(var mContext: Context,
         val desing = SepetCardBinding.inflate(layoutInflater, parent, false)
 
         Log.e("DebugAdapter", "SepetAdapter")
-
+        sepetRecyclerviewDisplayCorrectly = true
         return CardDesingHolder(desing)
     }
 
@@ -43,6 +44,7 @@ class SepetAdapter(var mContext: Context,
         cardDesing.sepetObject = sepet
         cardDesing.sepetFragment = fragment
         PicassoUtils.yemekResimGoster(sepet.yemek_resim_adi, cardDesing.imageViewItem)
+
     }
 
     override fun getItemCount(): Int {

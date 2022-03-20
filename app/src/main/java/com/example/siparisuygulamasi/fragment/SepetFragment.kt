@@ -26,7 +26,7 @@ class SepetFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         desing = DataBindingUtil.inflate(inflater,R.layout.fragment_sepet, container, false)
-        //viewModel.sepetiGuncelle()
+        viewModel.sepetiGuncelle()
         ActiveData.sepetAdapterActive = false
 
 
@@ -43,9 +43,10 @@ class SepetFragment : Fragment() {
             viewModel.yemekListesi.value?.let { yemekListesi ->
                 it?.let {
                     if (!ActiveData.sepetAdapterActive && it.size > 0){
-                        val filtreliSepet = viewModel.duzenlenmisSepetListesi(it,yemekListesi)!!
-                        viewModel.sepetRepo.sepetiBas(filtreliSepet,"DebugSepet")
-                        val adapter = SepetAdapter(requireContext(),viewModel,this, filtreliSepet)
+                        val filtreliSepet = viewModel.duzenlenmisSepetListesi(it, yemekListesi)!!
+                        //viewModel.sepetRepo.sepetiBas(filtreliSepet, "DebugSepet")
+                        ActiveData.sepetRecyclerviewDisplayCorrectly = false
+                        val adapter = SepetAdapter(requireContext(), viewModel, this, filtreliSepet)
                         desing.sepetAdapter = adapter
                         Log.e("DebugSepetFragment", "Sepet Menu Adapter Updated")
                         ActiveData.sepetAdapterActive = true
