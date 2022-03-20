@@ -33,12 +33,12 @@ class AnasayfaFragmentViewModel : ViewModel()  {
     //LiveData Yazdırma Methodları
     fun yemekleriBas(){yemekRepo.yemekleriBas()}
 
-    fun sepetiBas(){sepetRepo.sepetiBas()}
+    fun sepetiBas(debugTag: String){sepetRepo.sepetiBas(debugTag)}
 
     //APILER
     fun yemekSiparisAdediniHesapla(yemek_adi: String): Int{ return listedekiToplamSiparisAdedi(sepetListesi.value, yemek_adi) }
 
-    fun sepetteYemegiFiltrele(yemek_adi: String, sepetListesi: List<Sepet>?): List<Sepet>?{ return sepetRepo.sepetteYemegiFiltrele(yemek_adi) }
+    fun sepetteYemegiFiltrele(yemek_adi: String, sepetListesi: List<Sepet>?): List<Sepet>?{ return sepetRepo.sepetteYemegiFiltrele(yemek_adi,sepetListesi) }
 
     fun listedekiToplamSiparisAdedi(sepetListesi: List<Sepet>?) : Int{ return sepetRepo.listedekiToplamSiparisAdedi(sepetListesi) }
 

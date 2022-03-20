@@ -26,10 +26,6 @@ class YemekDetayFragmentViewModel : ViewModel()  {
 
     fun sepetiGuncelle() { sepetRepo.sepetiVeriTabanindanGuncelle() }
 
-    fun yemekleriBas(){yemekRepo.yemekleriBas()}
-
-    fun sepetiBas(){sepetRepo.sepetiBas()}
-
     fun sepettenYemekCikar(yemek_adi:String){ sepetRepo.sepettenYemekSil(yemek_adi) }
 
     fun siparisOlustur(yemek: Yemek, siparisAdedi:Int){ sepetRepo.sepeteEkle(yemek,siparisAdedi) }

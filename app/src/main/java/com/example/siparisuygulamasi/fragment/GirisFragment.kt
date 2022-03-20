@@ -37,7 +37,7 @@ class GirisFragment : Fragment() {
 
         }
 
-        ActiveData.sepetFragmentHasNeverBeenShownYet = true
+        ActiveData.anasayfaFragmentHasNeverBeenShownYet = true
         return design.root
     }
 

@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="yemekObject" type="com.example.siparisuygulamasi.entity.Yemek" />
+        <variable name="sepetObject" type="com.example.siparisuygulamasi.entity.Sepet" />
         <variable name="sepetFragment" type="com.example.siparisuygulamasi.fragment.SepetFragment" />
         <import type="com.example.siparisuygulamasi.entity.ActiveData"/>
     </data>
@@ -43,7 +43,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/sansita_swashed"
-                            android:text="Ayran"
+                            android:text="@{sepetObject.yemek_adi}"
                             android:textAlignment="center"
                             android:textColor="@color/primary_text_color"
                             android:textSize="24sp"
@@ -91,6 +91,7 @@
                                     android:id="@+id/buttonAzalt"
                                     android:layout_width="45dp"
                                     android:layout_height="56dp"
+                                    android:onClick="@{() -> sepetFragment.azaltButton(sepetObject)}"
                                     android:background="@color/primary_dark_color"
                                     app:srcCompat="@drawable/ic_baseline_keyboard_arrow_left_40" />
 
@@ -114,6 +115,7 @@
                                     android:textAlignment="center"
                                     android:textColor="@color/primary_text_color"
                                     android:textSize="24sp"
+                                    android:text="@{String.valueOf(sepetObject.yemek_siparis_adet)}"
                                     app:layout_constraintBottom_toTopOf="@id/textViewSepetFiyat"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -128,6 +130,7 @@
                                     android:textAlignment="center"
                                     android:textColor="@color/primary_text_light_color"
                                     android:textSize="16sp"
+                                    android:text='@{""+String.valueOf(sepetObject.yemek_siparis_adet*sepetObject.yemek_fiyat)+"₺"}'
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -146,6 +149,7 @@
                                     android:id="@+id/buttonArttır"
                                     android:layout_width="45dp"
                                     android:layout_height="56dp"
+                                    android:onClick="@{() -> sepetFragment.arttirButton(sepetObject)}"
                                     android:background="@color/primary_dark_color"
                                     app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_40" />
 
@@ -166,6 +170,7 @@
                                     android:id="@+id/imageViewSepettenSil"
                                     android:layout_width="45dp"
                                     android:layout_height="56dp"
+                                    android:onClick="@{() -> sepetFragment.silButton(sepetObject)}"
                                     android:background="@color/primary_dark_color"
                                     app:srcCompat="@drawable/ic_baseline_delete_24" />
 

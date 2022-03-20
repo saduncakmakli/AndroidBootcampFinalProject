@@ -40,29 +40,29 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
 
         //OBSERVER
         viewModel.yemekListesi.observe(viewLifecycleOwner) {
-            Log.e("DebugFragment", "AnasayfaFragment yemekListesi obverse method")
+            Log.e("DebugFragmentAnasayfa", "AnasayfaFragment yemekListesi obverse method")
             viewModel.yemekleriBas()
 
             if (!ActiveData.menuAdapterActive) {
                 val adapter = AnasayfaMenuAdapter(requireContext(),viewModel,this)
                 desing.menuAdapter = adapter
-                Log.e("DebugFragment", "Anasayfa Menu Adapter Updated")
+                Log.e("DebugFragmentAnasayfa", "Anasayfa Menu Adapter Updated")
                 ActiveData.menuAdapterActive = true
             }
 
         }
 
         viewModel.sepetListesi.observe(viewLifecycleOwner){
-            Log.e("DebugFragment", "AnasayfaFragment sepetListesi obverse method")
-            viewModel.sepetiBas()
+            Log.e("DebugFragmentAnasayfa", "AnasayfaFragment sepetListesi obverse method")
+            viewModel.sepetiBas("DebugFragmentAnasayfa")
             ekraniGuncelle()
 
         }
 
         firstStart() //Lottie animation, ve karşılama mesajı için
         //Veri tabanından güncelleme
-        //guncelle() //Sayfayı girişte guncelleme için
-        startRegularlyApiRequest() //Sayfayı hem girişte hemde düzenli olarak güncellenmek için
+        guncelle() //Sayfayı girişte guncelleme için
+        //startRegularlyApiRequest() //Sayfayı hem girişte hemde düzenli olarak güncellenmek için
 
         return desing.root
     }
@@ -115,7 +115,7 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     fun ekraniGuncelle(){
-        Log.e("Debug", "Anasayfa Ekran Guncellendi Sepet Ücreti:${viewModel.toplamSepetUcretiniHesapla()}, Gönderim Ücreti:${viewModel.sepetinGonderimUcretiniHesapla()}")
+        Log.e("DebugFragmentAnasayfa", "Anasayfa Ekran Guncellendi Sepet Ücreti:${viewModel.toplamSepetUcretiniHesapla()}, Gönderim Ücreti:${viewModel.sepetinGonderimUcretiniHesapla()}")
         desing.textViewSepetUcreti.text = viewModel.toplamSepetUcretiniYazdır()
         desing.textViewGonderimUcreti.text = viewModel.sepetinGonderimUcretiniYazdır()
         desing.textViewToplamUcret.text = viewModel.toplamUcretiYazdır()
@@ -127,7 +127,7 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
     fun startRegularlyApiRequest() {
         apiRequestJob = lifecycleScope.launch {
             while(true) {
-                Log.e("DebugFragment", "Anasayfa -> apiRequestJob is running.")
+                Log.e("DebugFragmentAnasayfa", "Anasayfa -> apiRequestJob is running.")
                 guncelle()
                 delay(10_000)
             }
@@ -139,9 +139,9 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     fun firstStart(){
-        if (ActiveData.sepetFragmentHasNeverBeenShownYet) {
+        if (ActiveData.anasayfaFragmentHasNeverBeenShownYet) {
 
-            ActiveData.sepetFragmentHasNeverBeenShownYet = false
+            ActiveData.anasayfaFragmentHasNeverBeenShownYet = false
             desing.animationView.playAnimation()
             desing.constraintLayoutLottie.visibility = View.VISIBLE
             desing.constraintLayoutProfile.visibility = View.GONE
@@ -156,9 +156,9 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
                         desing.constraintLayoutProfile.setPadding(5,5,5,5)
                         desing.imageViewProfile.layoutParams.width = (38 * dp).toInt()
                         desing.imageViewProfile.layoutParams.height = (38 * dp).toInt()
-                        Log.e("DebugFragment", "Welcome message is gone.")
+                        Log.e("DebugFragmentAnasayfa", "Welcome message is gone.")
                     }
-                    Log.e("DebugFragment", "Timer tick")
+                    Log.e("DebugFragmentAnasayfa", "Timer tick")
                     welcomeMessageTimerIsStarted = false
                 }
                 override fun onFinish() {}
@@ -174,7 +174,7 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
                         desing.constraintLayoutProfile.visibility = View.VISIBLE
                         timerWelcomeMessage.start()
                     }
-                    Log.e("DebugFragment", "Lottie Timer tick")
+                    Log.e("DebugFragmentAnasayfa", "Lottie Timer tick")
                     lottieTimerIsStarted = false
                 }
                 override fun onFinish() {}

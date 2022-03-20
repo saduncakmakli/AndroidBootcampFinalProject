@@ -23,13 +23,12 @@ class YemekRepository {
         return yemekListesi
     }
 
-   fun yemekleriVeritabanindanGuncelle ()
-    {
+    fun yemekleriVeritabanindanGuncelle () {
         Log.e("DebugRepo", "yemekleriVeritabanindanGuncelle()")
         yemekDataAccessObject.tumYemekleriGetir().enqueue(object : Callback<YemekCevap>{
             override fun onResponse(call: Call<YemekCevap>?, response: Response<YemekCevap>) {
-                val success = response.body().success
-                val liste = response.body().yemekler
+                val success = response.body()!!.success
+                val liste = response.body()!!.yemekler
                 yemekListesi.value = liste
                 Log.e("DebugRepo", "Yemekleri Getir Api success -> $success")
             }
@@ -40,4 +39,13 @@ class YemekRepository {
     }
 
     fun yemekleriBas(){ for (yemek in yemekListesi.value!!) Log.e("DebugFragmentVM", "Yemek ID:${yemek.yemek_id} Ad:${yemek.yemek_adi}") }
+
+    fun getYemekObject(yemek_adi:String) : Yemek? {
+        yemekListesi.value?.let {
+            for (yemek in it){
+                if (yemek.yemek_adi == yemek_adi) return yemek
+            }
+        }
+        return null
+    }
 }
