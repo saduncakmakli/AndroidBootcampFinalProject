@@ -61,12 +61,14 @@ class SepetFragment : Fragment() {
         val timer = object: CountDownTimer(1000, 500) {
             override fun onTick(millisUntilFinished: Long) {
                 if (!TimerIsStarted){
-                    changeVisibilityCartEmptyAlert(if (viewModel.sepetRecyclerViewCardsShown == true) CartEmpty.NOT_EMPTY else CartEmpty.EMPTY, true)
+
                 }
                 Log.e("DebugSepetFragment", "Lottie and RecyclerviewControl Timer tick")
                 TimerIsStarted = false
             }
-            override fun onFinish() {}
+            override fun onFinish() {
+                changeVisibilityCartEmptyAlert(if (viewModel.sepetRecyclerViewCardsShown == true) CartEmpty.NOT_EMPTY else CartEmpty.EMPTY, true)
+            }
         }
 
         //Timer and Coroutine Job Starters
