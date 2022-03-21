@@ -10,13 +10,14 @@ import com.example.siparisuygulamasi.entity.ActiveData
 import com.example.siparisuygulamasi.entity.Sepet
 import com.example.siparisuygulamasi.fragment.SepetFragment
 import com.example.siparisuygulamasi.picasso.PicassoUtils
+import com.example.siparisuygulamasi.repo.CartEmpty
 import com.example.siparisuygulamasi.viewmodel.SepetFragmentViewModel
 import kotlinx.coroutines.runBlocking
 
 class SepetAdapter(var mContext: Context,
                    var viewModel:SepetFragmentViewModel,
                    var fragment:SepetFragment,
-                   val sepetListesi:List<Sepet>
+                   val sepetListesi:ArrayList<Sepet>
                    ) : RecyclerView.Adapter<SepetAdapter.CardDesingHolder>() {
 
     init {
@@ -36,6 +37,7 @@ class SepetAdapter(var mContext: Context,
 
         Log.e("DebugAdapter", "SepetAdapter")
         viewModel.sepetRecyclerViewCardsShown = true
+        fragment.changeVisibilityCartEmptyAlert(CartEmpty.NOT_EMPTY,false)
         return CardDesingHolder(desing)
     }
 
@@ -71,6 +73,9 @@ class SepetAdapter(var mContext: Context,
             sepet.yemek_siparis_adet = 0
             cardDesing.textViewSepetFiyat.text = "${sepet.yemek_siparis_adet*sepet.yemek_fiyat} ₺"
             cardDesing.textViewAdet.text = sepet.yemek_siparis_adet.toString()
+            sepetListesi.removeAt(position)
+            notifyDataSetChanged()
+            fragment.changeVisibilityCartEmptyAlert(if (sepetListesi.isEmpty()) CartEmpty.EMPTY else CartEmpty.NOT_EMPTY, false)
         }
     }
 
@@ -81,4 +86,5 @@ class SepetAdapter(var mContext: Context,
         Log.e("DebugAdapter", "SepetAdapter-getItemCount Zero")
         return 0
     }
+
 }

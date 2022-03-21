@@ -17,7 +17,9 @@ import com.example.siparisuygulamasi.R
 import com.example.siparisuygulamasi.adapter.SepetAdapter
 import com.example.siparisuygulamasi.databinding.FragmentSepetBinding
 import com.example.siparisuygulamasi.entity.ActiveData
+import com.example.siparisuygulamasi.entity.Sepet
 import com.example.siparisuygulamasi.viewmodel.SepetFragmentViewModel
+import com.example.siparisuygulamasi.repo.CartEmpty
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
@@ -26,6 +28,7 @@ class SepetFragment : Fragment() {
 
     private lateinit var desing: FragmentSepetBinding
     lateinit var viewModel: SepetFragmentViewModel
+    lateinit var adapter: SepetAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         desing = DataBindingUtil.inflate(inflater,R.layout.fragment_sepet, container, false)
@@ -46,23 +49,8 @@ class SepetFragment : Fragment() {
 
         viewModel.sepetListesi.observe(viewLifecycleOwner){
             //ADAPTER
-            viewModel.yemekListesi.value?.let { yemekListesi ->
-                viewModel.sepetListesi.value?.let { sepetListesi ->
-                    if (!ActiveData.sepetAdapterActive && !sepetListesi.isNullOrEmpty() && !yemekListesi.isNullOrEmpty()){
-                        val filtreliSepet = viewModel.duzenlenmisSepetListesi(sepetListesi, yemekListesi)
-                        if (!filtreliSepet.isNullOrEmpty()) {
-                            viewModel.sepetRepo.sepetiBas(filtreliSepet, "DebugSepet")
-                            val adapter = SepetAdapter(requireContext(), viewModel, this, filtreliSepet)
-                            desing.sepetAdapter = adapter
-                            Log.e("DebugSepetFragment", "Sepet Menu Adapter Updated")
-                            ActiveData.sepetAdapterActive = true
-                        }
-                    }
-                }
-            }
+            loadRecyclerView()
         }
-
-        //Log.e("DebugSepetRecyclerView", " ----------------> ${ActiveData.sepetRecyclerViewCardsShown}")
 
         //RW LAYOUT MANAGER
         desing.sepetRecyclerView.layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
@@ -73,15 +61,9 @@ class SepetFragment : Fragment() {
         val timer = object: CountDownTimer(1000, 500) {
             override fun onTick(millisUntilFinished: Long) {
                 if (!TimerIsStarted){
-                    if (viewModel.sepetRecyclerViewCardsShown == true) {
-                        desing.buttonSepeteUrunEkle.visibility = View.GONE
-                        desing.textViewSepetBos.visibility = View.GONE
-                    }else{
-                        desing.buttonSepeteUrunEkle.visibility = View.VISIBLE
-                        desing.textViewSepetBos.visibility = View.VISIBLE
-                    }
+                    changeVisibilityCartEmptyAlert(if (viewModel.sepetRecyclerViewCardsShown == true) CartEmpty.NOT_EMPTY else CartEmpty.EMPTY, true)
                 }
-                Log.e("DebugFragmentAnasayfa", "Lottie Timer tick")
+                Log.e("DebugSepetFragment", "Lottie and RecyclerviewControl Timer tick")
                 TimerIsStarted = false
             }
             override fun onFinish() {}
@@ -111,4 +93,39 @@ class SepetFragment : Fragment() {
         val tempViewModel : SepetFragmentViewModel by viewModels()
         viewModel = tempViewModel
     }
+
+    fun changeVisibilityCartEmptyAlert(cardEmpty: CartEmpty, tryReLoadRecyclerView:Boolean){
+        if (cardEmpty == CartEmpty.NOT_EMPTY) {
+            desing.buttonSepeteUrunEkle.visibility = View.GONE
+            desing.textViewSepetBos.visibility = View.GONE
+        }else if(cardEmpty == CartEmpty.EMPTY){
+            desing.buttonSepeteUrunEkle.visibility = View.VISIBLE
+            desing.textViewSepetBos.visibility = View.VISIBLE
+
+            if (tryReLoadRecyclerView){
+                //Recycler view'e veri hatalı gelirse tekrar yüklemek için
+                loadRecyclerView()
+            }
+        }
+    }
+
+    fun loadRecyclerView(){
+        viewModel.yemekListesi.value?.let { yemekListesi ->
+            viewModel.sepetListesi.value?.let { sepetListesi ->
+                if (!ActiveData.sepetAdapterActive && !sepetListesi.isNullOrEmpty() && !yemekListesi.isNullOrEmpty()){
+                    val filtreliSepet = viewModel.duzenlenmisSepetListesi(sepetListesi, yemekListesi)
+                    if (!filtreliSepet.isNullOrEmpty()) {
+                        viewModel.sepetRepo.sepetiBas(filtreliSepet, "DebugSepet")
+                        val arrayList = ArrayList<Sepet>(filtreliSepet)
+                        adapter = SepetAdapter(requireContext(), viewModel, this, arrayList)
+                        desing.sepetAdapter = adapter
+                        Log.e("DebugSepetFragment", "Sepet Menu Adapter Updated")
+                        ActiveData.sepetAdapterActive = true
+                    }
+                }
+            }
+        }
+    }
+
+
 }
