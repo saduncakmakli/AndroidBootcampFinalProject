@@ -61,8 +61,8 @@ class AnasayfaFragment : Fragment(), SearchView.OnQueryTextListener {
 
         firstStart() //Lottie animation, ve karşılama mesajı için
         //Veri tabanından güncelleme
-        guncelle() //Sayfayı girişte guncelleme için
-        //startRegularlyApiRequest() //Sayfayı hem girişte hemde düzenli olarak güncellenmek için
+        //guncelle() //Sayfayı girişte guncelleme için
+        startRegularlyApiRequest() //Sayfayı hem girişte hemde düzenli olarak güncellenmek için
 
         return desing.root
     }

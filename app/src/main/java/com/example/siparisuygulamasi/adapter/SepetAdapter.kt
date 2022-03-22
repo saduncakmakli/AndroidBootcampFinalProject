@@ -64,6 +64,11 @@ class SepetAdapter(var mContext: Context,
             sepet.yemek_siparis_adet -= 1
             cardDesing.textViewSepetFiyat.text = "${sepet.yemek_siparis_adet*sepet.yemek_fiyat} ₺"
             cardDesing.textViewAdet.text = sepet.yemek_siparis_adet.toString()
+            if (sepet.yemek_siparis_adet == 0){
+                sepetListesi.removeAt(position)
+                notifyDataSetChanged()
+                fragment.changeVisibilityCartEmptyAlert(if (sepetListesi.isEmpty()) CartEmpty.EMPTY else CartEmpty.NOT_EMPTY, false)
+            }
         }
 
         cardDesing.cardViewSepettenSil.setOnClickListener {

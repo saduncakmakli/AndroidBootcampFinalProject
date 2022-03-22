@@ -35,6 +35,10 @@ class SepetFragment : Fragment() {
         ActiveData.sepetAdapterActive = false
         viewModel.sepetRecyclerViewCardsShown = false
 
+        //LOTTİE PLAY
+        desing.animationViewSepet.playAnimation()
+        desing.constraintLayoutLottieSepet.visibility = View.VISIBLE
+
         //TOOLBAR
         desing.toolbarTitle = "Sepetim"
 
@@ -68,11 +72,19 @@ class SepetFragment : Fragment() {
             }
             override fun onFinish() {
                 changeVisibilityCartEmptyAlert(if (viewModel.sepetRecyclerViewCardsShown == true) CartEmpty.NOT_EMPTY else CartEmpty.EMPTY, true)
+                desing.animationViewSepet.pauseAnimation()
+                desing.constraintLayoutLottieSepet.visibility = View.GONE
+                desing.buttonSepetiOnayla2.visibility = View.VISIBLE
             }
         }
 
         //Timer and Coroutine Job Starters
         timer.start()
+
+        desing.buttonSepeteUrunEkle.setOnClickListener {
+            val direction = SepetFragmentDirections.actionSepetFragmentToAnasayfaFragment()
+            Navigation.findNavController(requireView()).navigate(direction)
+        }
 
 
         return desing.root
@@ -128,6 +140,5 @@ class SepetFragment : Fragment() {
             }
         }
     }
-
 
 }

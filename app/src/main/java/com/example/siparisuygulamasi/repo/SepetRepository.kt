@@ -82,9 +82,9 @@ class SepetRepository () {
             }
     }
 
-    fun syncSepettenYemekSil(sepet_yemek_id:Int):Response<CRUDCevap>{return sepetDataAccessObject.syncSepettenYemekSil(sepet_yemek_id,ActiveData.kullanici_adi).execute()}
-    fun syncGuncelSepetiGetir():Response<SepetCevap>{ return sepetDataAccessObject.syncSepettekiYemekleriGetir(ActiveData.kullanici_adi).execute() }
-    fun syncSepeteEkle(yemek_adi:String, yemek_resim_adi:String, yemek_fiyat:Int, yemek_siparis_adet:Int):Response<CRUDCevap>{return sepetDataAccessObject.syncSepeteYemekEkle(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,ActiveData.kullanici_adi).execute()}
+    fun syncSepettenYemekSil(sepet_yemek_id:Int):Response<CRUDCevap>{return sepetDataAccessObject.sepettenYemekSil(sepet_yemek_id,ActiveData.kullanici_adi).execute()}
+    fun syncGuncelSepetiGetir():Response<SepetCevap>{ return sepetDataAccessObject.sepettekiYemekleriGetir(ActiveData.kullanici_adi).execute() }
+    fun syncSepeteEkle(yemek_adi:String, yemek_resim_adi:String, yemek_fiyat:Int, yemek_siparis_adet:Int):Response<CRUDCevap>{return sepetDataAccessObject.sepeteYemekEkle(yemek_adi,yemek_resim_adi,yemek_fiyat,yemek_siparis_adet,ActiveData.kullanici_adi).execute()}
 
     //TURETILMIS/DERIVED FONKSIYONLAR
     fun sepetiBas(debugTag: String){ sepetiBas(sepetListesi.value,debugTag)}
